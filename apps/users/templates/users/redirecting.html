@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting...</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            font-size: 2.5em;
+            color: #4CAF50;
+        }
+        p {
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+        .spinner {
+            margin: 30px auto;
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #4CAF50;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+    <script>
+        setTimeout(function() {
+            window.location.href = "{% url redirect_url %}"; 
+        }, 2000); // Redirect after 2 seconds
+    </script>
+</head>
+<body>
+    <h1>{{ message }}</h1>
+    <div class="spinner"></div>
+    <p>You will be redirected shortly...</p>
+</body>
+</html>

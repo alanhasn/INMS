@@ -1,0 +1,97 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Register</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/register.css' %}" />
+  </head>
+  <body>
+    <section>
+      <div class="signin">
+        <div class="content">
+          <h2>Sign Up</h2>
+          <!--Displaying messages-->
+          {% if messages %}
+          <ul class="messages">
+            {% for message in messages %}
+            <li {% if message.tags %} class="{{message.tags}}" {% endif %}>
+              {{message}}
+            </li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+
+
+          <div class="social">
+            <div class="google_login">
+                {# Social Login #}
+                <a href="{% url 'social:begin' 'google-oauth2' %}" class="google">Continue With Google &nbsp;<i class="fa-brands fa-google"></i></a>
+            </div>
+          </div>
+        
+          <form method="post" class="form">
+            {% csrf_token %}
+            <div class="inputBox">
+              {{ form.username }}
+              <i>{{ form.username.label }}</i>
+              {% if form.username.errors %}
+              <ul class="errorlist">
+                {% for error in form.username.errors %}
+                <li style="color: red">{{ error }}</li>
+                {% endfor %}
+              </ul>
+              {% endif %}
+            </div>
+
+            <div class="inputBox">
+              {{ form.email }}
+              <i>{{ form.email.label }}</i>
+              {% if form.email.errors %}
+              <ul class="errorlist">
+                {% for error in form.email.errors %}
+                <li style="color: red">{{ error }}</li>
+                {% endfor %}
+              </ul>
+              {% endif %}
+            </div>
+
+            <div class="inputBox">
+              {{ form.password1 }}
+              <i>{{ form.password1.label }}</i>
+              {% if form.password1.errors %}
+              <ul class="errorlist">
+                {% for error in form.password1.errors %}
+                <li style="color: red">{{ error }}</li>
+                {% endfor %}
+              </ul>
+              {% endif %}
+            </div>
+
+            <div class="inputBox">
+              {{ form.password2 }}
+              <i>{{ form.password2.label }}</i>
+              {% if form.password2.errors %}
+              <ul class="errorlist">
+                {% for error in form.password2.errors %}
+                <li style="color: red">{{ error }}</li>
+                {% endfor %}
+              </ul>
+              {% endif %}
+            </div>
+            <div class="links">
+              <p style="color: white">
+                already have an Account?
+                <a style="text-decoration: underline" href="{% url "login" %}">login</a>
+              </p>
+            </div>
+            <div class="inputBox">
+              <input type="submit" value="SignUp" />
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

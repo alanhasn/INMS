@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200px" height="200px" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <title>NetManager Logo</title>
+    <g id="Logo" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <circle id="Background" fill="#2C3E50" cx="100" cy="100" r="100"></circle>
+        <g id="Network" transform="translate(30.000000, 40.000000)">
+            <circle id="Node-1" fill="#3498DB" cx="25" cy="25" r="15"></circle>
+            <circle id="Node-2" fill="#3498DB" cx="115" cy="25" r="15"></circle>
+            <circle id="Node-3" fill="#3498DB" cx="70" cy="100" r="15"></circle>
+            <circle id="Node-4" fill="#3498DB" cx="140" cy="80" r="15"></circle>
+            <line x1="25" y1="25" x2="115" y2="25" stroke="#FFFFFF" stroke-width="3"></line>
+            <line x1="25" y1="25" x2="70" y2="100" stroke="#FFFFFF" stroke-width="3"></line>
+            <line x1="115" y1="25" x2="70" y2="100" stroke="#FFFFFF" stroke-width="3"></line>
+            <line x1="115" y1="25" x2="140" y2="80" stroke="#FFFFFF" stroke-width="3"></line>
+            <line x1="70" y1="100" x2="140" y2="80" stroke="#FFFFFF" stroke-width="3"></line>
+        </g>
+        <text font-family="Arial-BoldMT, Arial" font-size="24" font-weight="bold" fill="#FFFFFF">
+            <tspan x="50" y="170">NetManager</tspan>
+        </text>
+    </g>
+</svg>

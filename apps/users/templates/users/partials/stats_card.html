@@ -1,0 +1,59 @@
+{% load static %}
+<!-- ====================== -->
+<!-- STATISTICS CARDS       -->
+<!-- ====================== -->
+<section class="stats-section mb-4">
+    <div class="row g-4" id="statsCardsRow">
+        <!-- Devices Stats Card -->
+        <div class="col-lg-3 col-md-6 col-sm-12">
+            <a href="devices.html" class="stats-card">
+                <div class="card" data-card-type="stat" data-metric="devices">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Devices</h5>
+                        <h2 class="card-text" id="totalDevicesValue">24</h2>
+                        <p class="card-text"><small id="devicesStatusText">Active: 20 | Inactive: 4</small></p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Network Status Card -->
+        <div class="col-lg-3 col-md-6 col-sm-12">
+            <a href="reports.html" class="stats-card">
+                <div class="card" data-card-type="stat" data-metric="network">
+                    <div class="card-body">
+                        <h5 class="card-title">Network Status</h5>
+                        <h2 class="card-text" id="networkStatusValue">98.5%</h2>
+                        <p class="card-text"><small id="networkStatusText">Uptime last 24h</small></p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Alerts Card -->
+        <div class="col-lg-3 col-md-6 col-sm-12">
+            <a href="events.html" class="stats-card">
+                <div class="card" data-card-type="stat" data-metric="alerts">
+                    <div class="card-body">
+                        <h5 class="card-title">Active Alerts</h5>
+                        <h2 class="card-text" id="alertsCountValue">3</h2>
+                        <p class="card-text"><small id="alertsStatusText">Critical: 1 | Warning: 2</small></p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Bandwidth Usage Card -->
+        <div class="col-lg-3 col-md-6 col-sm-12">
+            <a href="reports.html#bandwidth" class="stats-card">
+                <div class="card" data-card-type="stat" data-metric="bandwidth">
+                    <div class="card-body">
+                        <h5 class="card-title">Bandwidth Usage</h5>
+                        <h2 class="card-text" id="bandwidthValue">75%</h2>
+                        <p class="card-text"><small id="bandwidthPeakText">Peak today: 82%</small></p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>

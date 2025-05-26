@@ -1,0 +1,29 @@
+{% load static %}
+<div class="sidebar" id="sidebar">
+    <div class="logo-container">
+        <img src="{% static 'img/logo.svg' %}" alt="NetManager Logo" class="logo">
+    </div>
+    <ul class="nav flex-column mt-4">
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'dashboard' %}">{# TODO: Use Django URL tags here #}
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="devices.html"> {# TODO: Use Django URL tags here #}
+                <i class="fas fa-server"></i> Devices
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'events:events' %}"> {# TODO: Use Django URL tags here #}
+                <i class="fas fa-list-alt"></i> Events
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="reports.html"> {# TODO: Use Django URL tags here #}
+                <i class="fas fa-chart-bar"></i> Reports
+            </a>
+        </li>
+    </ul>
+    
+</div>

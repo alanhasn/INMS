@@ -1,0 +1,77 @@
+{% load static %} {# Load static files #}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Login</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="{% static 'css/register.css' %}" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+	</head>
+	<body>
+		<section>
+			<div class="signin">
+				<div class="content">
+                <h2>Login</h2>
+                    <!--Displaying messages-->
+                    {% if messages  %}
+                        <ul class="messages">
+                            {% for message in messages  %}
+                                <li {% if message.tags %} class="{{message.tags}}" {% endif %}>{{message}}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+
+                    {# Display Non-Field Errors (e.g., incorrect password) #}
+                    {% if form.non_field_errors %}
+                        <ul class="errorlist">
+                            {% for error in form.non_field_errors %}
+                                <li style="color: red;">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                    
+                    {# Social Login #}
+                    <div class="social">
+                        <div class="google_login">
+                            <a href="{% url 'social:begin' 'google-oauth2' %}" class="google">Continue With Google &nbsp;<i class="fa-brands fa-google"></i></a>
+                        </div>
+                    </div>
+                    
+					<form method="post" class="form">
+						{% csrf_token %}
+						<div class="inputBox">
+							{{form.username}}
+							<i>{{form.username.label}}</i>
+                            {% if form.username.errors %} {#If there is error related to this field#}
+                                <ul class="errorlist">
+                                    {% for error in  form.username.errors %} {#Loop in this errors#}
+                                        <li style="color: red;">{{error}}</li> {#Show all errors#}
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+						</div>
+						<div class="inputBox">
+							{{form.password}}
+							<i>{{form.password.label}}</i>
+                            {% if form.password.errors %} {#If there is error related to this field#}
+                                <ul class="errorlist">
+                                    {% for error in form.password.errors %} {#Loop in this errors#}
+                                        <li style="color: red;">{{error}}</li> {#Show all errors#}
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+						</div>
+						<div class="links">
+							<p>Create Account: <a href="{% url 'register' %}">Register</a></p><br><br>
+                            <p>Forgot Password: <a href="{% url 'password_reset' %}">Reset</a></p><br><br>                                
+						</div>  
+						<div class="inputBox">
+							<input type="submit" value="Login" />
+						</div>
+					</form>
+				</div>
+			</div>
+		</section>
+	</body>
+</html>

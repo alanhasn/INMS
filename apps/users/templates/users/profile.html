@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head> 
+<body>
+    <div class="container">
+        <div class="profile-card">
+            <div class="profile-header">
+                <div class="profile-img">
+                    {# Display profile image #}
+                    {% if profile.profile_image %}
+                        <img width="150" height="150" src="{{ profile.profile_image.url }}" alt="Profile Image">
+                    {% else %}
+                        <img width="150" height="150" src="{% static 'img/profile-image.jpg' %}" alt="Default Profile">
+                    {% endif %}
+                </div>
+                <h1>{{ profile.user.username }}</h1> {# Display username #}
+                {# Display full name #}
+                <p><strong>{{ profile.first_name|default:"" }} {{ profile.last_name|default:"" }}</strong></p>
+                {# Display bio #}
+                {% if profile.bio %}
+                    <p class="tagline">{{ profile.bio|truncatechars:100 }}</p>
+                {% else %}
+                    <p class="tagline">No Bio Added</p>
+                {% endif %}
+            </div>
+            <div class="profile-stats">
+                <div class="stat">
+                    <span class="stat-number">{{ profile.user.date_joined|date:"M Y" }}</span> {# Display date joined #}
+                    <span class="stat-label">Joined</span>
+                </div>
+                <div class="stat">
+                    {% if profile.user.email %} {# Display email #}
+                        <span class="stat-number">{{ profile.user.email }}</span>
+                        <span class="stat-label">Email</span>
+                    {% else %}
+                        <span class="stat-number">No Email Added</span>
+                        <span class="stat-label">Email</span>
+                    {% endif %}     
+                </div>
+            </div>
+            <div class="profile-actions">
+                {# Edit Profile Button #}
+                <a href="{% url 'edit_profile' %}" class="btn edit-btn"><i class="fas fa-edit"></i> Edit Profile</a>
+                {# Dashboard Button #}
+                <a href="{% url 'dashboard' %}" class="btn dashboard-btn"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                {# Logout Button #}
+                <a href="{% url 'logout' %}" class="btn logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+            
+        </div>
+    </div>
+</body>
+</html>

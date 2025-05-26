@@ -1,0 +1,65 @@
+{% load static %}
+<!-- ====================== -->
+<!-- RECENT EVENTS TABLE    -->
+<!-- ====================== -->
+<section class="events-section">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card" id="eventsCard">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0">Recent Events</h5>
+                    <div class="action-buttons">
+                        <a href="events.html?filter=critical" class="btn btn-sm btn-danger me-2">Critical Events</a>
+                        <a href="events.html" class="btn btn-sm btn-primary">View All</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table" id="eventsTable">
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <th>Device</th>
+                                    <th>Event</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-event-id="1">
+                                    <td>21:45</td>
+                                    <td><a href="devices.html?device=router-01" class="event-link">Router-01</a></td>
+                                    <td><a href="event-details.html?id=1" class="event-link">High CPU Usage</a></td>
+                                    <td><span class="badge bg-warning">Warning</span></td>
+                                </tr>
+                                <tr data-event-id="2">
+                                    <td>21:30</td>
+                                    <td><a href="devices.html?device=switch-03" class="event-link">Switch-03</a></td>
+                                    <td><a href="event-details.html?id=2" class="event-link">Port Down</a></td>
+                                    <td><span class="badge bg-danger">Critical</span></td>
+                                </tr>
+                                <tr data-event-id="3">
+                                    <td>20:15</td>
+                                    <td><a href="devices.html?device=firewall-01" class="event-link">Firewall-01</a></td>
+                                    <td><a href="event-details.html?id=3" class="event-link">Login Attempt Failed</a></td>
+                                    <td><span class="badge bg-warning">Warning</span></td>
+                                </tr>
+                                <tr data-event-id="4">
+                                    <td>18:30</td>
+                                    <td><a href="devices.html?device=router-02" class="event-link">Router-02</a></td>
+                                    <td><a href="event-details.html?id=4" class="event-link">Interface Flapping</a></td>
+                                    <td><span class="badge bg-info">Info</span></td>
+                                </tr>
+                                <tr data-event-id="5">
+                                    <td>15:22</td>
+                                    <td><a href="devices.html?device=nas-01" class="event-link">NAS-01</a></td>
+                                    <td><a href="event-details.html?id=5" class="event-link">Disk Space Low</a></td>
+                                    <td><span class="badge bg-warning">Warning</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

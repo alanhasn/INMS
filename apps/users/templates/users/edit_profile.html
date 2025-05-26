@@ -1,0 +1,115 @@
+{% load static %} {# Load static files #}
+<!DOCTYPE html>
+{# HTML Template for Edit Profile #}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    {# Load font awesome #}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    {# Load custom styles #}
+    <link rel="stylesheet" href="{% static 'css/edit_profile.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="profile-card">
+            <div class="header">
+                <h1><i class="fas fa-user-edit"></i> Edit Profile</h1>
+            </div>
+            {# Display messages #}
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <div class="message {{ message.tags }}">
+                    {% if message.tags == 'error' %}
+                        <i class="fas fa-exclamation-circle"></i>
+                    {% else %}
+                        <i class="fas fa-info-circle"></i>
+                    {% endif %}
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <form method="POST" enctype="multipart/form-data" class="profile-form">
+                {% csrf_token %}
+                
+                <div class="form-group image-upload">
+                    <div class="image-preview">
+                        {# Display existing profile image #}
+                        {% if user.profile.profile_image %}
+                            <img id="image-preview" width="150" height="150" src="{{ user.profile.profile_image.url }}" alt="Profile Image">
+                        {% else %}
+                            <img id="image-preview" width="150" height="50" src="{% static 'img/profile-image.jpg' %}" alt="Default Profile">
+                        {% endif %}
+                    </div>                    
+                    <label for="id_profile_image" class="upload-btn">
+                        <i class="fas fa-camera"></i> Change Photo
+                    </label>
+                    {{form.profile_image}} {# Display profile image field #}
+                </div>
+
+                <div class="form-group">
+                    <label for="id_first_name"><i class="fas fa-user"></i> First Name</label>
+                    {{ form.first_name }}
+                    {{ form.first_name.errors }}
+                </div>
+
+                <div class="form-group">
+                    <label for="id_last_name"><i class="fas fa-user"></i> Last Name</label>
+                    {{ form.last_name }}
+                    {{ form.last_name.errors }}
+                </div>
+
+                <div class="form-group">
+                    <label for="id_bio"><i class="fas fa-info-circle"></i> Bio</label>
+                    {{ form.bio }}
+                    {{ form.bio.errors }}
+                </div>
+
+                <div class="form-group">
+                    <label for="id_phone_number"><i class="fas fa-phone"></i> Phone Number</label>
+                    {{ form.phone_number }}
+                    {{ form.phone_number.errors }}
+                </div>
+
+                <div class="form-group">
+                    <label for="id_address"><i class="fas fa-map-marker-alt"></i> Address</label>
+                    {{ form.address }}
+                    {{ form.address.errors }}
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="save-btn">
+                        <i class="fas fa-save"></i> Save Changes
+                    </button>
+                    <a href="{% url 'profile' %}" class="back-btn">
+                        <i class="fas fa-arrow-left"></i> Back to Profile
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {# JavaScript for Image Preview #}
+    <script>
+        const fileInput = document.getElementById("id_profile_image");
+        const previewImage = document.getElementById("image-preview");
+    
+        fileInput.addEventListener("change", function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                
+                reader.onload = function (e) {
+                    previewImage.src = e.target.result;
+                };
+    
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+</html>

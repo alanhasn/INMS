@@ -1,0 +1,54 @@
+<div class="modal fade" id="addDeviceModal" tabindex="-1" aria-labelledby="addDeviceModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addDeviceModalLabel">Add New Device</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addDeviceForm">
+                    <div class="mb-3">
+                        <label for="newDeviceName" class="form-label">Device Name</label>
+                        <input type="text" class="form-control" id="newDeviceName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="newDeviceType" class="form-label">Device Type</label>
+                        <select class="form-select" id="newDeviceType" required>
+                            <option value="" selected disabled>Select device type</option>
+                            <option value="router">Router</option>
+                            <option value="switch">Switch</option>
+                            <option value="server">Server</option>
+                            <option value="firewall">Firewall</option>
+                            <option value="workstation">Workstation</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="newDeviceIp" class="form-label">IP Address</label>
+                        <input type="text" class="form-control" id="newDeviceIp" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="newDeviceLocation" class="form-label">Location</label>
+                        <input type="text" class="form-control" id="newDeviceLocation" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="newDeviceStatus" class="form-label">Status</label>
+                        <select class="form-select" id="newDeviceStatus" required>
+                            <option value="" selected disabled>Select status</option>
+                            <option value="online">Online</option>
+                            <option value="offline">Offline</option>
+                            <option value="maintenance">Maintenance</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="newDeviceDescription" class="form-label">Description</label>
+                        <textarea class="form-control" id="newDeviceDescription" rows="3"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="addDevice()">Add Device</button> {# You'll need to define addDevice() in your page-specific JS #}
+            </div>
+        </div>
+    </div>
+</div>

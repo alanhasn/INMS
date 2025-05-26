@@ -1,0 +1,196 @@
+<div class="modal fade" id="deviceDetailsModal" tabindex="-1" aria-labelledby="deviceDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deviceDetailsModalLabel">Device Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs" id="deviceDetailsTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview" type="button" role="tab" aria-controls="overview" aria-selected="true">Overview</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="performance-tab" data-bs-toggle="tab" data-bs-target="#performance" type="button" role="tab" aria-controls="performance" aria-selected="false">Performance</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="events-tab" data-bs-toggle="tab" data-bs-target="#events" type="button" role="tab" aria-controls="events" aria-selected="false">Events</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="config-tab" data-bs-toggle="tab" data-bs-target="#config" type="button" role="tab" aria-controls="config" aria-selected="false">Configuration</button>
+                    </li>
+                </ul>
+                <div class="tab-content p-3" id="deviceDetailsTabsContent">
+                    <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="deviceName" class="form-label">Device Name</label>
+                                    <input type="text" class="form-control" id="deviceName" readonly>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="deviceType" class="form-label">Device Type</label>
+                                    <input type="text" class="form-control" id="deviceType" readonly>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="deviceStatus" class="form-label">Status</label>
+                                    <input type="text" class="form-control" id="deviceStatus" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="deviceIp" class="form-label">IP Address</label>
+                                    <input type="text" class="form-control" id="deviceIp" readonly>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="deviceLocation" class="form-label">Location</label>
+                                    <input type="text" class="form-control" id="deviceLocation" value="Main Office" readonly>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="deviceLastSeen" class="form-label">Last Seen</label>
+                                    <input type="text" class="form-control" id="deviceLastSeen" value="Just now" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="deviceDescription" class="form-label">Description</label>
+                            <textarea class="form-control" id="deviceDescription" rows="3" readonly>This is a sample device description. In a real application, this would contain detailed information about the device.</textarea>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="performance" role="tabpanel" aria-labelledby="performance-tab">
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">CPU Usage</h5>
+                                        <div class="progress mb-2">
+                                            <div class="progress-bar bg-success" role="progressbar" style="width: 45%;" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100">45%</div>
+                                        </div>
+                                        <small class="text-muted">Last 24 hours average: 38%</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Memory Usage</h5>
+                                        <div class="progress mb-2">
+                                            <div class="progress-bar bg-warning" role="progressbar" style="width: 72%;" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100">72%</div>
+                                        </div>
+                                        <small class="text-muted">Last 24 hours average: 65%</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Disk Usage</h5>
+                                        <div class="progress mb-2">
+                                            <div class="progress-bar bg-info" role="progressbar" style="width: 55%;" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100">55%</div>
+                                        </div>
+                                        <small class="text-muted">Total: 500GB, Used: 275GB</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Network Traffic</h5>
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <span>Incoming: 45 Mbps</span>
+                                            <span>Outgoing: 32 Mbps</span>
+                                        </div>
+                                        <small class="text-muted">Peak today: 120 Mbps at 14:30</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="events" role="tabpanel" aria-labelledby="events-tab">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Time</th>
+                                        <th>Event Type</th>
+                                        <th>Description</th>
+                                        <th>Severity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {# TODO: Replace with dynamic data loop #}
+                                    <tr>
+                                        <td>2025-04-15 23:42:15</td>
+                                        <td>Status Change</td>
+                                        <td>Device status changed to Online</td>
+                                        <td><span class="badge bg-info">Info</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2025-04-15 23:15:22</td>
+                                        <td>Configuration</td>
+                                        <td>Configuration updated</td>
+                                        <td><span class="badge bg-info">Info</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2025-04-15 22:30:10</td>
+                                        <td>Performance</td>
+                                        <td>CPU usage exceeded threshold (80%)</td>
+                                        <td><span class="badge bg-warning">Warning</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2025-04-15 21:45:33</td>
+                                        <td>Status Change</td>
+                                        <td>Device status changed to Offline</td>
+                                        <td><span class="badge bg-danger">Critical</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2025-04-15 21:44:05</td>
+                                        <td>Connection</td>
+                                        <td>Connection lost</td>
+                                        <td><span class="badge bg-danger">Critical</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="config" role="tabpanel" aria-labelledby="config-tab">
+                        <form>
+                            <div class="mb-3">
+                                <label for="configHostname" class="form-label">Hostname</label>
+                                <input type="text" class="form-control" id="configHostname" value="Router01"> {# TODO: Replace with dynamic data #}
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="configIpAddress" class="form-label">IP Address</label>
+                                    <input type="text" class="form-control" id="configIpAddress" value="192.168.1.1"> {# TODO: Replace with dynamic data #}
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="configSubnetMask" class="form-label">Subnet Mask</label>
+                                    <input type="text" class="form-control" id="configSubnetMask" value="255.255.255.0"> {# TODO: Replace with dynamic data #}
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="configDns" class="form-label">DNS Server</label>
+                                    <input type="text" class="form-control" id="configDns" value="8.8.8.8"> {# TODO: Replace with dynamic data #}
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="configGateway" class="form-label">Default Gateway</label>
+                                    <input type="text" class="form-control" id="configGateway" value="192.168.1.254"> {# TODO: Replace with dynamic data #}
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="configNotes" class="form-label">Configuration Notes</label>
+                                <textarea class="form-control" id="configNotes" rows="3">DHCP enabled on LAN interface. WAN interface configured for static IP.</textarea> {# TODO: Replace with dynamic data #}
+                            </div>
+                            <button type="button" class="btn btn-primary">Save Configuration</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
