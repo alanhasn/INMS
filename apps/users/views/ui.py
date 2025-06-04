@@ -78,7 +78,7 @@ def LogoutPage(request):
 
 # ============Password Reset=============
 class CustomPasswordResetView(PasswordResetView):
-    def form_valid(self, form): 
+    def form_valid(self, form):
         # Save the email in the session
         email = form.cleaned_data.get('email') 
         if email:
@@ -100,8 +100,8 @@ def resend_password_reset_email(request):
                 if form.is_valid():
                     # Send the password reset email
                     form.save(
-                        request=request,
-                        use_https=request.is_secure(),
+                        request=request, 
+                        use_https=request.is_secure(), # Use HTTPS if the request is secure
                         email_template_name="registration/password_reset_email.html",
                     )
                     messages.success(request, "Password reset email sent.")
@@ -117,7 +117,11 @@ def resend_password_reset_email(request):
 @login_required(login_url="login")
 def ProfilePage(request):
     # get_or_create returns a tuple (object, created)
-    profile, created = Profile.objects.get_or_create(user=request.user) # Get the user profile 
+    profile, created = Profile.objects.get_or_create(user=request.user) # Get the user profile
+
+    if created:
+        messages.info(request, "Profile created successfully. Please edit your profile to add more information.")
+
     # Context Data
     context = {
         "profile": profile # -> User Profile Info
@@ -128,8 +132,11 @@ def ProfilePage(request):
 # ============Edit Profile============
 @login_required(login_url="login")
 def EditProfile(request):
-    profile, created = Profile.objects.get_or_create(user=request.user)
+    profile, created = Profile.objects.get_or_create(user=request.user) 
     
+    if created:
+        messages.info(request, "Profile created successfully. Please edit your profile to add more information.")
+
     if request.method == "POST":
         form = EditProfileForm(request.POST, request.FILES, instance=profile) # get the form data and instance of the profile
         if form.is_valid():
@@ -148,10 +155,15 @@ def EditProfile(request):
 
 # ============Dashboard============
 @login_required(login_url="login")
-def DashboardPage(request):
+def DashboardPage(request):    
     return render(request, "users/dashboard.html")
 
     
 # ============404 Page=============
 def PageNotFound(request, exception):
+    """
+    Custom 404 error page view.
+    This view is called when a page is not found (404 error).
+    It renders a custom 404 error page.
+    """
     return render(request, "users/404.html", status=404)

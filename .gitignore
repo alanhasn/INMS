@@ -1,6 +1,12 @@
 venv/
 .env
 *.pyc
-__pycache__/
-db.sqlite3
 /static/
+INMS Django Project.drawio (1).png
+*/migrations/
+__pycache__/
+/media/
+.env
+.idea/
+.vscode/
+api.http

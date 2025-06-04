@@ -12,13 +12,13 @@ from django.conf.urls import handler404
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index_redirect , name='index'),
-    # path('', IndexRedirectView.as_view() , name="index"),
-    
+
     # Social Auth app
     path('oauth/', include('social_django.urls', namespace='social')),
     # Django Silk url
     path('silk/', include('silk.urls', namespace='silk')),
     #-----------------------------------------------------------------
+    # API and UI URLs for different apps
     path('api/users/', include(('apps.users.urls.api_urls'), namespace='users_api')),
     path('users/', include(('apps.users.urls.ui_urls'))),
     path("reports/",include("apps.reports.urls.ui_urls" , namespace="reports")),
@@ -26,5 +26,6 @@ urlpatterns = [
     path("events/",include("apps.events.urls.ui_urls" , namespace="events")),
 
 ]
-if settings.DEBUG:  # only for development mode
+  # only for development mode
+if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

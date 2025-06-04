@@ -8,5 +8,5 @@ class UsersConfig(AppConfig):
 
     # import the signals module
     def ready(self):
-        import apps.users.signals.profile_signals
+        import apps.users.signals.profile_signals 
 

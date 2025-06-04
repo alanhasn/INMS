@@ -9,7 +9,7 @@ class UserProfileAdmin(admin.ModelAdmin):
     """
     list_display = ("user__username","first_name","last_name","profile_image","created_at")
     search_fields = ("user__username","first_name","last_name")
-    list_filter = ("user__username" , "address" , "phone_number")
+    list_filter = ("user__username" , "country" , "city" ,  "phone_number")
     ordering = ("-created_at",)
     list_per_page = 20 # Number of records per page in the admin list view
     list_display_links = ("user__username", "first_name", "last_name")

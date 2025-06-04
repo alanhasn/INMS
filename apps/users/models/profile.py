@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import FileExtensionValidator
 from django.core.exceptions import ValidationError
+from django.contrib import messages
 from PIL import Image
 import os
 # -----------------------------------------------------------------------------
@@ -39,22 +40,35 @@ class Profile(models.Model):
     last_name = models.CharField(max_length=100, blank=True, null=True)
     bio = models.TextField(blank=True, null=True , max_length=100)
     phone_number = models.CharField(max_length=15, blank=True, null=True)
-    address = models.TextField(blank=True, null=True)
+    country = models.CharField(max_length=100, blank=True, null=True)
+    city = models.CharField(max_length=100, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True) 
+    updated_at = models.DateTimeField(auto_now=True)
+
 
     # save method to resize image after upload
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         if self.profile_image and os.path.isfile(self.profile_image.path):
             try:
-                img = Image.open(self.profile_image.path)
+                img = Image.open(self.profile_image.path) # Open the image file
+                img = img.convert("RGB") # Convert the image to RGB mode if not already
                 if img.height > 300 or img.width > 300:
                     output_size = (300, 300)
-                    img.thumbnail(output_size)
-                    img.save(self.profile_image.path, format=img.format)
-                img.close()
+                    img.thumbnail(output_size) # Resize the image to fit within 300x300 pixels
+                    img.save(self.profile_image.path, format=img.format) # Save the resized image
+                img.close() 
             except Exception as e:
                 raise ValidationError(f"Error processing image: {e}")
+            
+        if self.phone_number and not self.phone_number.isdigit():
+            raise ValidationError(
+                "Phone number must contain only digits."
+            )
+        if self.phone_number and len(self.phone_number) < 10:
+            raise ValidationError(
+                "Phone number must be at least 10 digits long."
+            )
     class Meta:
         # class meta for customizing the admin interface
         verbose_name = "Profile"

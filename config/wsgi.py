@@ -8,12 +8,9 @@ https://docs.djangoproject.com/en/5.1/howto/deployment/wsgi/
 """
 
 import os
-import sys
 from django.core.wsgi import get_wsgi_application
+from decouple import config  # Load environment variables from .env file
 
-sys.path.append(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'apps'))
-
-
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings.dev')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', config('DJANGO_SETTINGS_MODULE'))
 
 application = get_wsgi_application()

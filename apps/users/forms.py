@@ -20,14 +20,23 @@ class AuthenticationUserForm(AuthenticationForm):
 class EditProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ["profile_image", "first_name", "last_name", "bio", "phone_number", "address"] # fields to be shown in the template
+        fields = [  # fields to be shown in the template
+            "profile_image",
+            "first_name",
+            "last_name",
+            "bio", 
+            "phone_number",
+            "city" ,
+            "country",
+]
 
         # widgets are used to customize the form fields
         widgets = {
             "first_name": forms.TextInput(attrs={"class": "form-control", "placeholder": "First Name"}),
             "last_name": forms.TextInput(attrs={"class": "form-control", "placeholder": "Last Name"}),
             "bio": forms.Textarea(attrs={"class": "form-control", "placeholder": "Write something about you...", "rows": 4}),
-            "phone_number": forms.TextInput(attrs={"class": "form-control", "placeholder": "Phone Number"}),
-            "address": forms.Textarea(attrs={"class": "form-control", "placeholder": "Your Address", "rows": 3}),
+            "phone_number": forms.TextInput( attrs={"class": "form-control", "placeholder": "Phone Number"}),
+            "city": forms.TextInput(attrs={"class": "form-control", "placeholder": "City"}),
+            "country": forms.TextInput(attrs={"class": "form-control", "placeholder": "Country"}),
             "profile_image": forms.FileInput(attrs={"class": "form-control-file"}),
         }
