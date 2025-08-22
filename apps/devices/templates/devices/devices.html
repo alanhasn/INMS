@@ -72,16 +72,16 @@
                 <th class="px-6 py-3 font-medium">IP Address</th>
                 <th class="px-6 py-3 font-medium">Location</th>
                 <th class="px-6 py-3 font-medium">Status</th>
-                <th class="px-6 py-3 font-medium">Last Seen</th>
+                <th class="px-6 py-3 font-medium">Owner</th>
                 <th class="px-6 py-3 font-medium text-right">Actions</th>
             </tr>
         </thead>
         <tbody>
             {% for device in devices %}
             <tr class="border-t border-slate-700 hover:bg-slate-700/50">
-                <td class="px-6 py-4 font-medium text-white">{{ device.name }}</td>
-                <td class="px-6 py-4 capitalize">{{ device.type }}</td>
-                <td class="px-6 py-4 font-mono">{{ device.ip }}</td>
+                <td class="px-6 py-4 font-medium text-white">{{ device.device_name }}</td>
+                <td class="px-6 py-4 capitalize">{{ device.device_type }}</td>
+                <td class="px-6 py-4 font-mono">{{ device.ip_address }}</td>
                 <td class="px-6 py-4">{{ device.location }}</td>
                 <td class="px-6 py-4">
                     {% if device.status|lower == 'online' %}
@@ -94,7 +94,7 @@
                     <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-400"><i class='bx bxs-circle'></i> Warning</span>
                     {% endif %}
                 </td>
-                <td class="px-6 py-4 text-slate-400">{{ device.last_seen|default:"Never" }}</td>
+                <td class="px-6 py-4 text-slate-400">{{ device.owner }}</td>
                 <td class="px-6 py-4">
                     <div class="flex items-center justify-end gap-2">
                         <a href="{% url 'devices:device_detail' device.id %}" class="p-2 rounded-md hover:bg-sky-500/20 text-sky-400 transition-colors"><i class='bx bx-show'></i></a>

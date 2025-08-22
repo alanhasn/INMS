@@ -5,7 +5,9 @@ from ...users.models import Profile
 def test(request):
     profile  = Profile.objects.get(user=request.user) # Get the user profile
     context = {
-        "profile": profile # -> User Profile Info
+        "profile": profile, # -> User Profile Info
+        'active_page': 'devices'      # <-- to highlight the sidebar link
+
     }
     return render(request , "devices/devices.html" , context) 
 

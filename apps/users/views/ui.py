@@ -159,7 +159,9 @@ def DashboardPage(request):
     profile= Profile.objects.get(user=request.user) # Get the user profile
 
     context = {
-        "profile": profile # -> User Profile Info
+        "profile": profile, # -> User Profile Info
+        'active_page': 'dashboard'      # <-- to highlight the sidebar link
+
     }
     return render(request, "users/dashboard.html" , context)
 
