@@ -6,7 +6,7 @@
     <div class="row g-4" id="statsCardsRow">
         <!-- Devices Stats Card -->
         <div class="col-lg-3 col-md-6 col-sm-12">
-            <a href="devices.html" class="stats-card">
+            <a href="{% url 'devices:devices' %}" class="stats-card">
                 <div class="card" data-card-type="stat" data-metric="devices">
                     <div class="card-body">
                         <h5 class="card-title">Total Devices</h5>
@@ -19,7 +19,7 @@
 
         <!-- Network Status Card -->
         <div class="col-lg-3 col-md-6 col-sm-12">
-            <a href="reports.html" class="stats-card">
+            <a href="{% url 'reports:reports' %}" class="stats-card">
                 <div class="card" data-card-type="stat" data-metric="network">
                     <div class="card-body">
                         <h5 class="card-title">Network Status</h5>
@@ -32,7 +32,7 @@
 
         <!-- Alerts Card -->
         <div class="col-lg-3 col-md-6 col-sm-12">
-            <a href="events.html" class="stats-card">
+            <a href="{% url 'events:events' %}" class="stats-card">
                 <div class="card" data-card-type="stat" data-metric="alerts">
                     <div class="card-body">
                         <h5 class="card-title">Active Alerts</h5>
@@ -45,7 +45,7 @@
 
         <!-- Bandwidth Usage Card -->
         <div class="col-lg-3 col-md-6 col-sm-12">
-            <a href="reports.html#bandwidth" class="stats-card">
+            <a href="{% url 'reports:reports' %}" class="stats-card">
                 <div class="card" data-card-type="stat" data-metric="bandwidth">
                     <div class="card-body">
                         <h5 class="card-title">Bandwidth Usage</h5>

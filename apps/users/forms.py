@@ -24,9 +24,9 @@ class EditProfileForm(forms.ModelForm):
             "profile_image",
             "first_name",
             "last_name",
-            "bio", 
+            "bio",
             "phone_number",
-            "city" ,
+            "city",
             "country",
 ]
 

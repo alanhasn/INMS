@@ -4,5 +4,5 @@ from ..views import ui
 app_name = "reports"
 
 urlpatterns = [
-    path("" , ui.test)
+    path("" , ui.test,name="reports")
 ]

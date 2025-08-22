@@ -29,17 +29,18 @@ def Image_Validator(image):
 # This model is used to create a profile for the user.
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)  
-    profile_image = models.ImageField(upload_to="profile_images/", blank=True, null=True , verbose_name="Profile Image" ,
+    profile_image = models.ImageField(upload_to="profile_images/", blank=False, null=False , verbose_name="Profile Image" ,
                                       help_text="Upload a profile image",
                                       validators=[
                                           FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png']),
                                           Image_Validator 
-                                        ])
+                                        ],
+                                        default='')
     
-    first_name = models.CharField(max_length=100, blank=True, null=True)
-    last_name = models.CharField(max_length=100, blank=True, null=True)
-    bio = models.TextField(blank=True, null=True , max_length=100)
-    phone_number = models.CharField(max_length=15, blank=True, null=True)
+    first_name = models.CharField(max_length=100, blank=False, null=False, default='')
+    last_name = models.CharField(max_length=100, blank=False, null=False,default='')
+    bio = models.TextField(blank=False, null=False , max_length=100 ,default='')
+    phone_number = models.CharField(max_length=15, blank=False, null=False,default='')
     country = models.CharField(max_length=100, blank=True, null=True)
     city = models.CharField(max_length=100, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True) 

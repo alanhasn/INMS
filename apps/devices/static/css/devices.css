@@ -1,367 +1,454 @@
-/* Custom CSS for Network Management System - General & Devices Page Specific */
-
-/* Root variables - These are global and used throughout */
+/* Modern CSS Variables */
 :root {
-  --primary-color: #3498db;
-  --secondary-color: #2c3e50;
-  --success-color: #2ecc71;
-  --danger-color: #e74c3c;
-  --warning-color: #f39c12;
-  --info-color: #1abc9c;
-  --light-color: #ecf0f1;
-  --dark-color: #2c3e50;
+    --primary-color: #2563eb;
+    --secondary-color: #1e40af;
+    --background-color: #f1f5f9;
+    --sidebar-color: #1e293b;
+    --text-color: #334155;
+    --light-text: #94a3b8;
+    --white: #ffffff;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+    --success: #10b981;
+    --info: #3b82f6;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
-/* Body styles - Applies to the whole page background and font */
+/* Reset & Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-  font-family: "Roboto", sans-serif;
-  background-color: #f8f9fa;
-  overflow-x: hidden; /* Prevents horizontal scroll from sidebar transition */
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.5;
 }
 
-/* Sidebar styles - Applies to the includes/_sidebar.html partial */
-.sidebar {
-  position: fixed; /* Fixes the sidebar position */
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 250px;
-  background-color: var(--secondary-color);
-  color: white;
-  transition: all 0.3s; /* Smooth transition for collapsing */
-  z-index: 1000; /* Ensures sidebar is on top */
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+/* Main Layout */
+.wrapper {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
 }
 
-/* Sidebar collapsed state - Used by JS to hide the sidebar */
-.sidebar-collapsed {
-  margin-left: -250px;
-}
-
-/* Sidebar logo area styling */
-.sidebar .logo-container {
-  padding: 20px;
-  text-align: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.sidebar .logo {
-  max-width: 120px;
-  height: auto;
-}
-
-/* Sidebar navigation links styling */
-.sidebar .nav-link {
-  color: rgba(255, 255, 255, 0.8);
-  padding: 12px 20px;
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-}
-
-.sidebar .nav-link:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: white;
-}
-
-.sidebar .nav-link.active {
-  /* Style for the currently active link */
-  background-color: var(--primary-color);
-  color: white;
-}
-
-.sidebar .nav-link i {
-  /* Style for icons in links */
-  margin-right: 10px;
-  width: 20px; /* Fixed width for consistent alignment */
-  text-align: center;
-}
-
-.main-content {
-  margin-left: 250px;
-  transition: all 0.3s;
-}
-
-/* When sidebar is collapsed */
-.main-content-expanded {
-  margin-left: 0 !important;
-}
-
-/* Navbar styles - Applies to the includes/_top_navbar.html partial */
-.top-navbar {
-  background-color: white;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  padding: 10px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-/* Navbar toggler button (for sidebar) */
-.navbar-toggler {
-  background-color: transparent;
-  border: none;
-  color: var(--secondary-color);
-  font-size: 1.5rem;
-  cursor: pointer;
-}
-
-/* User dropdown in the navbar */
-.user-dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.user-dropdown-toggle {
-  background: none;
-  border: none;
-  color: var(--secondary-color);
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
-
-.user-dropdown-toggle img {
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  margin-right: 10px;
-}
-
-.user-dropdown-menu {
-  position: absolute;
-  right: 0;
-  top: 45px;
-  background-color: white;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
-  min-width: 200px;
-  display: none; /* Hidden by default, shown with JS */
-  z-index: 1001;
-}
-
-.user-dropdown-menu.show {
-  /* Class added by Bootstrap or custom JS */
-  display: block;
-}
-
-.user-dropdown-item {
-  padding: 10px 15px;
-  display: block;
-  color: var(--secondary-color);
-  text-decoration: none;
-  transition: all 0.2s;
-}
-
-.user-dropdown-item:hover {
-  background-color: #f8f9fa;
-}
-
-.user-dropdown-divider {
-  height: 1px;
-  background-color: #e9ecef;
-  margin: 5px 0;
-}
-
-/* Dashboard cards - Used for filters and the table wrapper on the devices page */
-.dashboard-card {
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  padding: 20px;
-  margin-bottom: 20px;
-  transition: all 0.3s;
-}
-
-.dashboard-card:hover {
-  transform: translateY(-5px); /* Slight lift effect on hover */
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-/* Styles for elements commonly found *inside* dashboard cards (like in dashboard page, potentially modals) */
-.dashboard-card .icon {
-  font-size: 2.5rem;
-  margin-bottom: 15px;
-}
-
-.dashboard-card .number {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-.dashboard-card .label {
-  color: #6c757d;
-  font-size: 0.9rem;
-}
-
-/* Status indicators - Used within the device table rows */
-.status-indicator {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  margin-right: 5px;
-}
-
-.status-active {
-  background-color: var(--success-color);
-}
-
-.status-inactive {
-  /* Assuming offline maps to inactive */
-  background-color: var(--danger-color);
-}
-
-.status-warning {
-  background-color: var(--warning-color);
-}
-
-/* Table styles - Used for the device table */
-/* Note: Many table styles come from Bootstrap classes like .table, .table-hover, .table-responsive */
-/* .custom-table { ... } - If you used this class, include its styles here. The HTML used Bootstrap defaults. */
-
-/* Custom styles for table headers using the secondary color */
-.table th {
-  /* Targeting all table headers, including those inside .dashboard-card */
-  background-color: var(--secondary-color);
-  color: white;
-  font-weight: 500;
-  border: none;
-}
-
-.table td {
-  vertical-align: middle; /* Vertically align cell content */
-}
-
-/* Form styles - Used within modals (add device, device details config tab) */
-/* Note: Many form styles come from Bootstrap classes like .form-control, .form-label, .form-select */
-.custom-form {
-  /* If you used this class on your forms, include its styles */
-  background-color: white; /* Matches the modal background */
-  border-radius: 10px; /* Might not be necessary within modal */
-  padding: 25px; /* Adjust padding within modal body */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); /* Might not be necessary within modal */
-}
-
-.form-control:focus {
-  /* Focus state for form inputs */
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
-}
-
-/* Chart container style - Used in the performance tab of the device details modal */
-.chart-container {
-  background-color: white; /* Matches the modal background */
-  border-radius: 10px; /* Might not be necessary within modal */
-  padding: 20px; /* Adjust padding */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); /* Might not be necessary within modal */
-  margin-bottom: 20px;
-}
-
-/* Badges - Used in the events tab of the device details modal */
-/* Note: Bootstrap has default badge styles (.badge, .bg-*) */
-/* If you have custom badge styles, include them here */
-/* The provided HTML uses Bootstrap's .badge and .bg-* classes, but the CSS has .custom-badge etc. */
-/* Assuming you want to use your custom badge styles as defined in the original CSS */
-.custom-badge {
-  padding: 5px 10px;
-  border-radius: 50px;
-  font-size: 0.8rem;
-  font-weight: 500;
-}
-
-.badge-success {
-  background-color: rgba(46, 204, 113, 0.2);
-  color: var(--success-color);
-}
-
-.badge-danger {
-  background-color: rgba(231, 76, 60, 0.2);
-  color: var(--danger-color);
-}
-
-.badge-warning {
-  background-color: rgba(243, 156, 18, 0.2);
-  color: var(--warning-color);
-}
-
-.badge-info {
-  background-color: rgba(26, 188, 156, 0.2);
-  color: var(--info-color);
-}
-
-/* Animations - General utility */
-.fade-in {
-  animation: fadeIn 0.5s ease-in-out;
-}
-
-@keyframes fadeIn {
-  from {
+/* Overlay */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 998;
     opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
+    transition: opacity 0.3s ease;
+}
+
+.overlay.active {
+    display: block;
     opacity: 1;
-    transform: translateY(0);
-  }
 }
 
-/* Responsive adjustments - Affects layout on smaller screens */
-@media (max-width: 768px) {
-  .sidebar {
-    margin-left: -250px; /* Hide sidebar by default on small screens */
-  }
-
-  /* Class used by JS to show sidebar on small screens */
-  .sidebar-mobile-open {
-    margin-left: 0;
-  }
-
-  .main-content {
-    margin-left: 0; /* No margin on small screens */
-    padding: 15px; /* Adjust padding */
-  }
-
-  .dashboard-card {
-    /* Adjust padding for cards on small screens */
-    padding: 15px;
-  }
-}
-
+/* Sidebar */
 #sidebar {
-  width: 250px;
-  transition: all 0.3s ease;
+    width: 280px;
+    height: 100vh;
+    background: var(--sidebar-color);
+    color: var(--white);
+    transition: transform 0.3s ease;
+    box-shadow: var(--shadow-md);
+    padding: 1.5rem 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    overflow-y: auto;
+    transform: none;
 }
 
 #sidebar.active {
-  margin-left: -200px;
+    transform: none;
 }
 
-/* Note: Styles for .auth-container, .settings-section, .report-card, etc.
-   have been excluded as they are specific to other pages and not used in the
-   general layout or components of the devices page.
-*/
+/* Main Content */
+.main-content {
+    min-height: 100vh;
+    background: var(--background-color);
+    transition: all 0.3s ease;
+    width: 100%;
+    padding-left: 0;
+}
 
-@media (max-width: 768px) {
-  .sidebar {
-    position: fixed;
-    left: -250px; /* مخفية افتراضيًا */
-    z-index: 1100; /* أعلى من الـ .user-dropdown-menu */
-  }
+/* Sidebar Header */
+#sidebar .sidebar-header {
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    margin-bottom: 1rem;
+}
 
-  .sidebar.sidebar-mobile-open {
-    left: 0; /* تظهر عند تفعيلها */
-  }
+#sidebar .sidebar-header h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--white);
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
 
-  .main-content {
-    margin-left: 0 !important;
-    padding: 15px;
-  }
+#sidebar .sidebar-header p {
+    font-size: 0.875rem;
+    color: var(--light-text);
+    margin: 0.5rem 0 0;
+    display: flex;
+    align-items: center;
+}
 
-  .top-navbar {
+/* Sidebar Navigation */
+#sidebar .nav-menu {
+    padding: 0;
+    list-style: none;
+    margin: 0;
+}
+
+#sidebar .nav-link {
+    display: flex;
+    align-items: center;
+    padding: 0.875rem 1.5rem;
+    color: var(--light-text);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border-left: 3px solid transparent;
+    font-weight: 500;
+}
+
+#sidebar .nav-link i {
+    margin-right: 0.75rem;
+    font-size: 1.25rem;
+    transition: transform 0.2s ease;
+}
+
+#sidebar .nav-link:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--white);
+    border-left-color: var(--primary-color);
+}
+
+#sidebar .nav-link:hover i {
+    transform: translateX(2px);
+}
+
+#sidebar .nav-link.active {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--white);
+    border-left-color: var(--primary-color);
+}
+
+/* Dashboard Card Styling */
+.dashboard-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+}
+
+.dashboard-card .card-title {
+    color: var(--bs-primary);
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+/* Status Badges */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.status-badge i {
+    font-size: 0.75rem;
+}
+
+.status-badge.status-active {
+    background-color: rgba(25, 135, 84, 0.1);
+    color: #198754;
+}
+
+.status-badge.status-inactive {
+    background-color: rgba(108, 117, 125, 0.1);
+    color: #6c757d;
+}
+
+.status-badge.status-warning {
+    background-color: rgba(255, 193, 7, 0.1);
+    color: #ffc107;
+}
+
+.status-badge.status-danger {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+}
+
+/* Navbar Styling */
+.navbar {
+    background: var(--white);
+    box-shadow: var(--shadow-sm);
+    padding: 1rem 1.5rem;
     position: sticky;
     top: 0;
-    z-index: 1090;
-  }
+    z-index: 999;
+}
+
+#sidebarCollapse {
+    border: none;
+    background: transparent;
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#sidebarCollapse:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+#sidebarCollapse i {
+    font-size: 1.5rem;
+    color: var(--text-color);
+}
+
+/* Table Styling */
+.table {
+    width: 100%;
+    margin: 0;
+    background: var(--white);
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.table th {
+    background: var(--background-color);
+    font-weight: 600;
+    color: var(--text-color);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    padding: 1rem;
+    border: none;
+}
+
+.table td {
+    padding: 1rem;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--background-color);
+    transition: background-color 0.2s ease;
+}
+
+.table tr:hover td {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+/* Status Indicators */
+.status-indicator {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+}
+
+.status-active {
+    background-color: var(--success);
+}
+
+.status-inactive {
+    background-color: var(--danger);
+}
+
+.status-warning {
+    background-color: var(--warning);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0;
+        padding-left: 0;
+        width: 100%;
+    }
+
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 997;
+        background: var(--white);
+    }
+    
+    .container-fluid {
+        margin-top: 70px;
+    }
+
+    #sidebar {
+        transform: translateX(-100%);
+    }
+
+    #sidebar.active {
+        transform: translateX(0);
+    }
+}
+
+@media (min-width: 769px) {
+    #sidebar {
+        transform: none;
+    }
+    
+    .main-content {
+        padding-left: 280px;
+        width: 100%;
+        transition: padding-left 0.3s ease;
+    }
+    
+    #sidebar.active {
+        transform: translateX(-100%);
+    }
+    
+    #sidebar.active ~ .main-content {
+        padding-left: 0;
+    }
+    
+    .overlay {
+        display: none !important;
+    }
+}
+
+/* Form Styling */
+.form-control, .form-select {
+    border-radius: 8px;
+    border-color: var(--bs-gray-300);
+    padding: 0.625rem 1rem;
+    transition: all 0.2s ease;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.1);
+}
+
+.form-label {
+    font-weight: 500;
+    color: var(--bs-gray-700);
+    margin-bottom: 0.5rem;
+}
+
+/* Button Styling */
+.btn {
+    padding: 0.625rem 1.25rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-primary {
+    background: var(--primary-color);
+    border: none;
+    color: var(--white);
+}
+
+.btn-primary:hover {
+    background: var(--secondary-color);
+    transform: translateY(-1px);
+}
+
+/* DataTables Custom Styling */
+.dataTables_wrapper .dataTables_length select {
+    border-radius: 8px;
+    padding: 0.375rem 2rem 0.375rem 0.75rem;
+    border-color: var(--bs-gray-300);
+}
+
+.dataTables_wrapper .dataTables_filter input {
+    border-radius: 8px;
+    padding: 0.375rem 0.75rem;
+    border: 1px solid var(--bs-gray-300);
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    border-radius: 8px;
+    padding: 0.375rem 0.75rem;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background: var(--bs-primary);
+    border-color: var(--bs-primary);
+    color: white !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: var(--bs-primary);
+    border-color: var(--bs-primary);
+    color: white !important;
+}
+
+/* Tab Navigation */
+.nav-tabs {
+    border-bottom-color: var(--bs-gray-200);
+}
+
+.nav-tabs .nav-link {
+    border: none;
+    color: var(--bs-gray-600);
+    padding: 0.75rem 1rem;
+    font-weight: 500;
+}
+
+.nav-tabs .nav-link:hover {
+    border: none;
+    color: var(--bs-primary);
+}
+
+.nav-tabs .nav-link.active {
+    color: var(--bs-primary);
+    border: none;
+    border-bottom: 2px solid var(--bs-primary);
+}
+
+/* Form Validation Styles */
+.was-validated .form-control:valid,
+.form-control.is-valid {
+    border-color: #198754;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
+}
+
+.was-validated .form-control:invalid,
+.form-control.is-invalid {
+    border-color: #dc3545;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+}
+
+/* Badge Styles */
+.badge {
+    padding: 0.35rem 0.65rem;
+    font-weight: 500;
+    border-radius: 50px;
 }

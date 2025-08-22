@@ -1,29 +1,33 @@
 {% load static %}
-<div class="sidebar" id="sidebar">
-    <div class="logo-container">
-        <img src="{% static 'img/logo.svg' %}" alt="NetManager Logo" class="logo">
+<!-- ====================== -->
+<!-- SIDEBAR NAVIGATION    -->
+<!-- ====================== -->
+<aside id="sidebar">
+    <div class="sidebar-header">
+        <h3><i class='bx bx-network-chart me-2'></i>INMS</h3>
+        <p><i class='bx bx-broadcast me-1'></i>Network Management</p>
     </div>
-    <ul class="nav flex-column mt-4">
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'dashboard' %}">{# TODO: Use Django URL tags here #}
-                <i class="fas fa-tachometer-alt"></i> Dashboard
+
+    <ul class="nav-menu" id="mainNavMenu">
+        <li>
+            <a href="{% url 'dashboard' %}" class="nav-link" data-page="dashboard">
+                <i class='bx bxs-dashboard'></i> Dashboard
             </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link active" href="devices.html"> {# TODO: Use Django URL tags here #}
-                <i class="fas fa-server"></i> Devices
+        <li>
+            <a href="{% url 'devices:devices' %}" class="nav-link active" data-page="devices">
+                <i class='bx bx-server'></i> Devices
             </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'events:events' %}"> {# TODO: Use Django URL tags here #}
-                <i class="fas fa-list-alt"></i> Events
+        <li>
+            <a href="{% url 'events:events' %}" class="nav-link" data-page="events">
+                <i class='bx bx-bell'></i> Events
             </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="reports.html"> {# TODO: Use Django URL tags here #}
-                <i class="fas fa-chart-bar"></i> Reports
+        <li>
+            <a href="" class="nav-link" data-page="reports">
+                <i class='bx bx-file'></i> Reports
             </a>
         </li>
     </ul>
-    
-</div>
+</aside>

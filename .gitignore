@@ -10,3 +10,14 @@ __pycache__/
 .idea/
 .vscode/
 api.http
+pyproject.toml
+.python-version
+
+*.sqlite3
+*.log
+*.db
+*.pot
+*.mo
+*.swp
+*.bak
+*.orig
