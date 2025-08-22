@@ -4,6 +4,11 @@ venv/
 /static/
 INMS Django Project.drawio (1).png
 */migrations/
+apps/devices/migrations/*
+apps/reports/migrations/*
+apps/users/migrations/*
+apps/events/migrations/*
+config/media
 __pycache__/
 /media/
 .env

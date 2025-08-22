@@ -52,7 +52,9 @@ INSTALLED_APPS = [
     # Django rest framwork JWT
     "rest_framework_simplejwt",
     # django silk
-    "silk"
+    "silk",
+    # django widget tweaks
+    "widget_tweaks",
 
 ]+MY_CUSTOM_APPS
 

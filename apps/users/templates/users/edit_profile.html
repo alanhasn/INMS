@@ -1,105 +1,139 @@
-{% load static %} {# Load static files #}
+{% load static %}
 <!DOCTYPE html>
-{# HTML Template for Edit Profile #}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Profile</title>
-    {# Load font awesome #}
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    {# Load custom styles #}
-    <link rel="stylesheet" href="{% static 'css/edit_profile.css' %}">
+    
+    <!-- Custom styles for Django form fields to apply Tailwind-like classes -->
+    <style>
+        /* Style text inputs, textareas, and other input types rendered by Django */
+        .profile-form input[type="text"],
+        .profile-form input[type="email"],
+        .profile-form input[type="tel"],
+        .profile-form textarea {
+            width: 100%;
+            background-color: rgba(31, 41, 55, 0.6); /* bg-gray-800/60 */
+            border: 1px solid #4b5563; /* border-gray-700 */
+            border-radius: 0.5rem; /* rounded-lg */
+            padding: 0.5rem 1rem; /* px-4 py-2 */
+            color: #e5e7eb; /* text-gray-200 */
+            transition: all 0.2s ease-in-out;
+        }
+
+        .profile-form input[type="text"]:focus,
+        .profile-form input[type="email"]:focus,
+        .profile-form input[type="tel"]:focus,
+        .profile-form textarea:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px #06b6d4; /* focus:ring-2 focus:ring-cyan-500 */
+            border-color: #06b6d4;
+        }
+        
+        /* Hide the default file input */
+        .profile-form input[type="file"] {
+            display: none;
+        }
+
+        /* Style for Django form errors */
+        .form-error {
+            color: #f87171; /* text-red-400 */
+            font-size: 0.875rem; /* text-sm */
+            margin-top: 0.5rem; /* mt-2 */
+        }
+    </style>
 </head>
-<body>
-    <div class="container">
-        <div class="profile-card">
-            <div class="header">
-                <h1><i class="fas fa-user-edit"></i> Edit Profile</h1>
-            </div>
-            {# Display messages #}
-            {% if messages %}
-            <div class="messages">
-                {% for message in messages %}
-                <div class="message {{ message.tags }}">
-                    {% if message.tags == 'error' %}
-                        <i class="fas fa-exclamation-circle"></i>
-                    {% else %}
-                        <i class="fas fa-info-circle"></i>
-                    {% endif %}
-                    {{ message }}
-                </div>
-                {% endfor %}
-            </div>
-            {% endif %}
+<body class="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-950 via-gray-900 to-black text-gray-200 font-sans p-4">
 
-            <form method="POST" enctype="multipart/form-data" class="profile-form">
-                {% csrf_token %}
-                
-                <div class="form-group image-upload">
-                    <div class="image-preview">
-                        {# Display existing profile image #}
-                        {% if user.profile.profile_image %}
-                            <img id="image-preview" width="150" height="150" src="{{ user.profile.profile_image.url }}" alt="Profile Image">
-                        {% else %}
-                            <img id="image-preview" width="150" height="50" src="{% static 'img/profile-image.jpg' %}" alt="Default Profile">
-                        {% endif %}
-                    </div>                    
-                    <label for="id_profile_image" class="upload-btn">
-                        <i class="fas fa-camera"></i> Change Photo
-                    </label>
-                    {{form.profile_image}} {# Display profile image field #}
-                </div>
-
-                <div class="form-group">
-                    <label for="id_first_name"><i class="fas fa-user"></i> First Name</label>
-                    {{ form.first_name }}
-                    {{ form.first_name.errors }}
-                </div>
-
-                <div class="form-group">
-                    <label for="id_last_name"><i class="fas fa-user"></i> Last Name</label>
-                    {{ form.last_name }}
-                    {{ form.last_name.errors }}
-                </div>
-
-                <div class="form-group">
-                    <label for="id_bio"><i class="fas fa-info-circle"></i> Bio</label>
-                    {{ form.bio }}
-                    {{ form.bio.errors }}
-                </div>
-
-                <div class="form-group">
-                    <label for="id_phone_number"><i class="fas fa-phone"></i> Phone Number</label>
-                    {{ form.phone_number }}
-                    {{ form.phone_number.errors }}
-                </div>                    
-
-                <div class="form-group">
-                    <label for="city"><i class="fas fa-map-marker-alt"></i> City</label>
-                    {{ form.city }}
-                    {{ form.city.errors }}
-                </div>
-                
-                <div class="form-group">
-                    <label for="country"><i class="fas fa-map-marker-alt"></i> Country</label>
-                    {{ form.country }}
-                    {{ form.country.errors }}
-                </div>
-
-                <div class="button-group">
-                    <button type="submit" class="save-btn">
-                        <i class="fas fa-save"></i> Save Changes
-                    </button>
-                    <a href="{% url 'profile' %}" class="back-btn">
-                        <i class="fas fa-arrow-left"></i> Back to Profile
-                    </a>
-                </div>
-            </form>
+    <main class="w-full max-w-2xl p-8 bg-gray-900/80 rounded-2xl shadow-2xl border border-gray-800">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-cyan-400 flex items-center justify-center gap-3"><i class="fas fa-user-edit"></i> Edit Profile</h1>
         </div>
-    </div>
 
-    {# JavaScript for Image Preview #}
+        {% if messages %}
+        <div class="space-y-3 mb-6">
+            {% for message in messages %}
+            <div class="p-3 rounded-lg text-sm flex items-center gap-3 {% if message.tags == 'error' %}bg-red-900/50 border border-red-700 text-red-300{% else %}bg-green-900/50 border border-green-700 text-green-300{% endif %}">
+                {% if message.tags == 'error' %}
+                    <i class="fas fa-exclamation-circle"></i>
+                {% else %}
+                    <i class="fas fa-info-circle"></i>
+                {% endif %}
+                <span>{{ message }}</span>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <form method="POST" enctype="multipart/form-data" class="profile-form space-y-6">
+            {% csrf_token %}
+            
+            <div class="flex flex-col items-center gap-4">
+                {% if user.profile.profile_image %}
+                    <img id="image-preview" class="w-32 h-32 rounded-full object-cover border-4 border-gray-700" src="{{ user.profile.profile_image.url }}" alt="Profile Image">
+                {% else %}
+                    <img id="image-preview" class="w-32 h-32 rounded-full object-cover border-4 border-gray-700" src="{% static 'img/profile-image.jpg' %}" alt="Default Profile">
+                {% endif %}
+                <label for="id_profile_image" class="cursor-pointer bg-gray-700 hover:bg-gray-600 text-gray-300 font-bold py-2 px-4 rounded-lg flex items-center gap-2 transition-colors">
+                    <i class="fas fa-camera"></i> Change Photo
+                </label>
+                {{ form.profile_image }}
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="id_first_name" class="block text-sm font-semibold text-gray-400 mb-2"><i class="fas fa-user fa-fw mr-1"></i> First Name</label>
+                    {{ form.first_name }}
+                    <div class="form-error">{{ form.first_name.errors }}</div>
+                </div>
+
+                <div>
+                    <label for="id_last_name" class="block text-sm font-semibold text-gray-400 mb-2"><i class="fas fa-user fa-fw mr-1"></i> Last Name</label>
+                    {{ form.last_name }}
+                    <div class="form-error">{{ form.last_name.errors }}</div>
+                </div>
+            </div>
+
+            <div>
+                <label for="id_bio" class="block text-sm font-semibold text-gray-400 mb-2"><i class="fas fa-info-circle fa-fw mr-1"></i> Bio</label>
+                {{ form.bio }}
+                <div class="form-error">{{ form.bio.errors }}</div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="id_phone_number" class="block text-sm font-semibold text-gray-400 mb-2"><i class="fas fa-phone fa-fw mr-1"></i> Phone Number</label>
+                    {{ form.phone_number }}
+                    <div class="form-error">{{ form.phone_number.errors }}</div>
+                </div>
+                
+                <div>
+                    <label for="id_city" class="block text-sm font-semibold text-gray-400 mb-2"><i class="fas fa-map-marker-alt fa-fw mr-1"></i> City</label>
+                    {{ form.city }}
+                    <div class="form-error">{{ form.city.errors }}</div>
+                </div>
+            </div>
+
+            <div>
+                <label for="id_country" class="block text-sm font-semibold text-gray-400 mb-2"><i class="fas fa-globe fa-fw mr-1"></i> Country</label>
+                {{ form.country }}
+                <div class="form-error">{{ form.country.errors }}</div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                <button type="submit" class="w-full flex items-center justify-center gap-2 py-3 bg-cyan-500 hover:bg-cyan-600 text-black font-bold rounded-lg shadow-lg transition-transform duration-300 ease-in-out hover:scale-105">
+                    <i class="fas fa-save"></i> Save Changes
+                </button>
+                <a href="{% url 'profile' %}" class="w-full text-center flex items-center justify-center gap-2 py-3 bg-gray-700 hover:bg-gray-600 text-gray-200 font-bold rounded-lg shadow-lg transition-transform duration-300 ease-in-out hover:scale-105">
+                    <i class="fas fa-arrow-left"></i> Back to Profile
+                </a>
+            </div>
+        </form>
+    </main>
+
     <script>
         const fileInput = document.getElementById("id_profile_image");
         const previewImage = document.getElementById("image-preview");
@@ -108,11 +142,9 @@
             const file = this.files[0];
             if (file) {
                 const reader = new FileReader();
-                
                 reader.onload = function (e) {
                     previewImage.src = e.target.result;
                 };
-    
                 reader.readAsDataURL(file);
             }
         });

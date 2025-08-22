@@ -1,77 +1,119 @@
-{% load static %} {# Load static files #}
+{% load static %}
+{% load widget_tweaks %}
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<title>Login</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="stylesheet" href="{% static 'css/register.css' %}" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-	</head>
-	<body>
-		<section>
-			<div class="signin">
-				<div class="content">
-                <h2>Login</h2>
-                    <!--Displaying messages-->
-                    {% if messages  %}
-                        <ul class="messages">
-                            {% for message in messages  %}
-                                <li {% if message.tags %} class="{{message.tags}}" {% endif %}>{{message}}</li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script
+      src="https://kit.fontawesome.com/a2d04d4f09.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body
+    class="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-950 via-gray-900 to-black text-gray-200"
+  >
+    <section
+      class="w-full max-w-md p-8 bg-gray-900/80 rounded-2xl shadow-2xl border border-gray-800"
+    >
+      <div class="text-center mb-6">
+        <h2 class="text-3xl font-bold text-cyan-400">Login</h2>
+        <p class="text-sm text-gray-400 mt-2">Welcome back! Please sign in</p>
+      </div>
 
-                    {# Display Non-Field Errors (e.g., incorrect password) #}
-                    {% if form.non_field_errors %}
-                        <ul class="errorlist">
-                            {% for error in form.non_field_errors %}
-                                <li style="color: red;">{{ error }}</li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-                    
-                    {# Social Login #}
-                    <div class="social">
-                        <div class="google_login">
-                            <a href="{% url 'social:begin' 'google-oauth2' %}" target="_blank" class="google">Continue With Google &nbsp;<i class="fa-brands fa-google"></i></a>
-                        </div>
-                    </div>
-                    
-					<form method="post" class="form">
-						{% csrf_token %}
-						<div class="inputBox">
-							{{form.username}}
-							<i>{{form.username.label}}</i>
-                            {% if form.username.errors %} {#If there is error related to this field#}
-                                <ul class="errorlist">
-                                    {% for error in  form.username.errors %} {#Loop in this errors#}
-                                        <li style="color: red;">{{error}}</li> {#Show all errors#}
-                                    {% endfor %}
-                                </ul>
-                            {% endif %}
-						</div>
-						<div class="inputBox">
-							{{form.password}}
-							<i>{{form.password.label}}</i>
-                            {% if form.password.errors %} {#If there is error related to this field#}
-                                <ul class="errorlist">
-                                    {% for error in form.password.errors %} {#Loop in this errors#}
-                                        <li style="color: red;">{{error}}</li> {#Show all errors#}
-                                    {% endfor %}
-                                </ul>
-                            {% endif %}
-						</div>
-						<div class="links">
-							<p>Create Account: <a href="{% url 'register' %}">Register</a></p><br><br>
-                            <p>Forgot Password: <a href="{% url 'password_reset' %}">Reset</a></p><br><br>                                
-						</div>  
-						<div class="inputBox">
-							<input type="submit" value="Login" />
-						</div>
-					</form>
-				</div>
-			</div>
-		</section>
-	</body>
+      <!-- Display messages -->
+      {% if messages %}
+      <ul class="mb-4 space-y-2">
+        {% for message in messages %}
+        <li
+          class="p-2 rounded-md text-sm 
+              {% if message.tags == 'error' %} bg-red-500/20 text-red-400 border border-red-500/30 
+              {% elif message.tags == 'success' %} bg-green-500/20 text-green-400 border border-green-500/30 
+              {% else %} bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 {% endif %}"
+        >
+          {{ message }}
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+
+      <!-- Non-field errors -->
+      {% if form.non_field_errors %}
+      <ul class="mb-4">
+        {% for error in form.non_field_errors %}
+        <li class="text-sm text-red-400">{{ error }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+
+      <!-- Social Login -->
+      <div class="mb-6">
+        <a
+          href="{% url 'social:begin' 'google-oauth2' %}"
+          target="_blank"
+          class="flex items-center justify-center gap-2 w-full py-3 bg-gray-800 hover:bg-gray-700 text-cyan-400 font-semibold rounded-lg transition transform hover:scale-[1.02] shadow-md"
+        >
+          <i class="fa-brands fa-google"></i>
+          Continue with Google
+        </a>
+      </div>
+
+      <!-- Form -->
+      <form method="post" class="space-y-5">
+        {% csrf_token %}
+
+        <!-- Username -->
+        <div>
+          <label class="block text-sm mb-1 text-gray-300"
+            >{{ form.username.label }}</label
+          >
+          {{ form.username|add_class:"w-full px-4 py-3 bg-gray-800 text-gray-100 rounded-lg border border-gray-700 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition" }}
+          {% if form.username.errors %}
+          <p class="text-sm text-red-400 mt-1">{{ form.username.errors.0 }}</p>
+          {% endif %}
+        </div>
+
+        <!-- Password -->
+        <div>
+          <label class="block text-sm mb-1 text-gray-300"
+            >{{ form.password.label }}</label
+          >
+          {{ form.password|add_class:"w-full px-4 py-3 bg-gray-800 text-gray-100 rounded-lg border border-gray-700 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition" }}
+          {% if form.password.errors %}
+          <p class="text-sm text-red-400 mt-1">{{ form.password.errors.0 }}</p>
+          {% endif %}
+        </div>
+
+        <!-- Submit -->
+        <button
+          type="submit"
+          class="w-full py-3 bg-cyan-500 hover:bg-cyan-600 text-black font-bold rounded-lg transition transform hover:scale-[1.02] shadow-lg"
+        >
+          Login
+        </button>
+
+        <!-- Links -->
+        <div class="text-center text-sm text-gray-400 mt-4 space-y-2">
+          <p>
+            Don’t have an account?
+            <a
+              href="{% url 'register' %}"
+              class="text-cyan-400 hover:underline"
+              >Sign Up</a
+            >
+          </p>
+          <p>
+            Forgot password?
+            <a
+              href="{% url 'password_reset' %}"
+              class="text-cyan-400 hover:underline"
+              >Reset</a
+            >
+          </p>
+        </div>
+      </form>
+    </section>
+  </body>
 </html>

@@ -1,32 +1,34 @@
 {% load static %}
-<!-- Top Navigation Bar -->
-<header>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-      <button type="button" id="sidebarCollapse" class="btn btn-dark">
-        <i class="bx bx-menu"></i>
-      </button>
-      <div class="ms-auto">
-        <div class="dropdown">
-          <button
-            class="btn btn-secondary dropdown-toggle"
-            type="button"
-            id="userDropdown"
-            data-bs-toggle="dropdown">
-            <i class="bx bx-user"></i>
-          </button>
-          <ul class="dropdown-menu dropdown-menu-end">
-            <li>
-              <a class="dropdown-item" href="{% url 'profile' %}">Profile</a>
-            </li>
-            <li><a class="dropdown-item" href="#">Settings</a></li>
-            <li><hr class="dropdown-divider" /></li>
-            <li>
-              <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
-            </li>
-          </ul>
+<!-- ====================== -->
+<!-- HEADER / TOP NAV       -->
+<!-- ====================== -->
+<header class="sticky top-0 z-20 bg-slate-900/80 backdrop-blur-lg border-b border-slate-800">
+    <div class="px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+        <!-- Mobile Menu Toggle -->
+        <button type="button" id="sidebarCollapse" class="md:hidden p-2 rounded-md text-slate-400 hover:bg-slate-800 hover:text-white">
+            <i class='bx bx-menu text-2xl'></i>
+        </button>
+
+        <!-- Placeholder for search or other actions -->
+        <div class="flex-1"></div>
+
+        <!-- User Dropdown -->
+        <div class="relative">
+            <button type="button" id="user-dropdown-button" class="flex items-center justify-center w-10 h-10 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-cyan-500 bord">
+                {% if user.profile.profile_image %}
+                    <img class="w-full h-full rounded-full object-cover" src="{{ user.profile.profile_image.url }}" alt="User Profile Photo">
+                {% else %}
+                    <!-- Fallback to a default image if no profile image is set -->
+                    <img class="w-full h-full rounded-full object-cover" src="{% static 'img/profile-image.jpg' %}" alt="Default Profile Photo">
+                {% endif %}
+            </button>
+            
+            <div id="user-dropdown-menu" class="hidden absolute right-0 mt-2 w-48 bg-slate-800 border border-slate-700 rounded-lg shadow-xl py-1 z-50">
+                <a class="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-700/50 hover:text-white" href="{% url 'profile' %}">Profile</a>
+                <a class="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-700/50 hover:text-white" href="#">Settings</a>
+                <div class="my-1 border-t border-slate-700"></div>
+                <a class="block px-4 py-2 text-sm text-red-400 hover:bg-slate-700/50 hover:text-red-300" href="{% url 'logout' %}">Logout</a>
+            </div>
         </div>
-      </div>
     </div>
-  </nav>
 </header>

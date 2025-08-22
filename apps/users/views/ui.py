@@ -156,7 +156,12 @@ def EditProfile(request):
 # ============Dashboard============
 @login_required(login_url="login")
 def DashboardPage(request):    
-    return render(request, "users/dashboard.html")
+    profile= Profile.objects.get(user=request.user) # Get the user profile
+
+    context = {
+        "profile": profile # -> User Profile Info
+    }
+    return render(request, "users/dashboard.html" , context)
 
     
 # ============404 Page=============

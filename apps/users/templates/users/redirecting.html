@@ -4,45 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redirecting...</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
-            text-align: center;
-            padding: 50px;
-        }
-        h1 {
-            font-size: 2.5em;
-            color: #4CAF50;
-        }
-        p {
-            font-size: 1.2em;
-            margin-top: 20px;
-        }
-        .spinner {
-            margin: 30px auto;
-            width: 50px;
-            height: 50px;
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid #4CAF50;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
+        // It redirects the user after a delay.
         setTimeout(function() {
-            window.location.href = "{% url redirect_url %}"; 
+            const redirectUrl = "{% url redirect_url %}";
+            if (redirectUrl) {
+                window.location.href = redirectUrl;
+            }
         }, 2000); // Redirect after 2 seconds
     </script>
 </head>
-<body>
-    <h1>{{ message }}</h1>
-    <div class="spinner"></div>
-    <p>You will be redirected shortly...</p>
+<body class="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-950 via-gray-900 to-black text-gray-200 font-sans">
+
+    <!-- Main card container, styled to match the profile page -->
+    <main class="w-full max-w-md p-8 text-center bg-gray-900/80 rounded-2xl shadow-2xl border border-gray-800">
+        
+        <!-- The message passed from the Django view -->
+        <h1 class="text-3xl font-bold text-cyan-400">{{ message }}</h1>
+
+        <!-- Tailwind CSS spinner -->
+        <div class="w-12 h-12 mx-auto my-8 border-4 border-gray-700 rounded-full border-t-cyan-400 animate-spin"></div>
+
+        <p class="text-gray-400">You will be redirected shortly...</p>
+
+    </main>
+
 </body>
 </html>

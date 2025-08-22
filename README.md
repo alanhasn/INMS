@@ -23,9 +23,9 @@ Prerequisites:
 
 Steps:
 1. Clone the repository:
-   git clone https://github.com/yourusername/Internal-Network-Management-System-INMS.git
+   git clone https://github.com/alanhasn/Internal-Network-Management-System.git
 2. Navigate to the project directory:
-   cd Internal-Network-Management-System-INMS
+   cd Internal-Network-Management-System
 3. Create a virtual environment:
    python -m venv venv
 4. Activate the virtual environment:
@@ -60,5 +60,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Contact
 For any questions or suggestions, please open an issue or contact:
-- Email: your.email@example.com
-- GitHub: https://github.com/yourusername
+- Email: whoamialan@gmail.com
+- GitHub: https://github.com/alanhasn

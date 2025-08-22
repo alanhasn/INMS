@@ -2,64 +2,59 @@
 <!-- ====================== -->
 <!-- RECENT EVENTS TABLE    -->
 <!-- ====================== -->
-<section class="events-section">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card" id="eventsCard">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="card-title mb-0">Recent Events</h5>
-                    <div class="action-buttons">
-                        <a href="events.html?filter=critical" class="btn btn-sm btn-danger me-2">Critical Events</a>
-                        <a href="events.html" class="btn btn-sm btn-primary">View All</a>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table" id="eventsTable">
-                            <thead>
-                                <tr>
-                                    <th>Time</th>
-                                    <th>Device</th>
-                                    <th>Event</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr data-event-id="1">
-                                    <td>21:45</td>
-                                    <td><a href="devices.html?device=router-01" class="event-link">Router-01</a></td>
-                                    <td><a href="event-details.html?id=1" class="event-link">High CPU Usage</a></td>
-                                    <td><span class="badge bg-warning">Warning</span></td>
-                                </tr>
-                                <tr data-event-id="2">
-                                    <td>21:30</td>
-                                    <td><a href="devices.html?device=switch-03" class="event-link">Switch-03</a></td>
-                                    <td><a href="event-details.html?id=2" class="event-link">Port Down</a></td>
-                                    <td><span class="badge bg-danger">Critical</span></td>
-                                </tr>
-                                <tr data-event-id="3">
-                                    <td>20:15</td>
-                                    <td><a href="devices.html?device=firewall-01" class="event-link">Firewall-01</a></td>
-                                    <td><a href="event-details.html?id=3" class="event-link">Login Attempt Failed</a></td>
-                                    <td><span class="badge bg-warning">Warning</span></td>
-                                </tr>
-                                <tr data-event-id="4">
-                                    <td>18:30</td>
-                                    <td><a href="devices.html?device=router-02" class="event-link">Router-02</a></td>
-                                    <td><a href="event-details.html?id=4" class="event-link">Interface Flapping</a></td>
-                                    <td><span class="badge bg-info">Info</span></td>
-                                </tr>
-                                <tr data-event-id="5">
-                                    <td>15:22</td>
-                                    <td><a href="devices.html?device=nas-01" class="event-link">NAS-01</a></td>
-                                    <td><a href="event-details.html?id=5" class="event-link">Disk Space Low</a></td>
-                                    <td><span class="badge bg-warning">Warning</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+<section class="bg-slate-800 border border-slate-700 rounded-xl shadow-lg">
+    <!-- Card Header -->
+    <div class="p-4 sm:p-6 border-b border-slate-700 flex flex-wrap items-center justify-between gap-4">
+        <h5 class="text-lg font-semibold text-white">Recent Events</h5>
+        <div class="flex items-center gap-2">
+            <a href="events.html?filter=critical" class="px-3 py-1.5 text-xs font-semibold text-white bg-red-600/80 hover:bg-red-600 rounded-md transition-colors">Critical Events</a>
+            <a href="events.html" class="px-3 py-1.5 text-xs font-semibold text-slate-900 bg-cyan-400 hover:bg-cyan-300 rounded-md transition-colors">View All</a>
         </div>
+    </div>
+
+    <!-- Table -->
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm text-left text-slate-300">
+            <thead class="text-xs text-slate-400 uppercase bg-slate-800">
+                <tr>
+                    <th scope="col" class="px-6 py-3 font-medium">Time</th>
+                    <th scope="col" class="px-6 py-3 font-medium">Device</th>
+                    <th scope="col" class="px-6 py-3 font-medium">Event</th>
+                    <th scope="col" class="px-6 py-3 font-medium">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-b border-slate-700 hover:bg-slate-700/50">
+                    <td class="px-6 py-4">21:45</td>
+                    <td class="px-6 py-4"><a href="devices.html?device=router-01" class="text-cyan-400 hover:underline">Router-01</a></td>
+                    <td class="px-6 py-4"><a href="event-details.html?id=1" class="hover:underline">High CPU Usage</a></td>
+                    <td class="px-6 py-4"><span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-400">Warning</span></td>
+                </tr>
+                <tr class="border-b border-slate-700 hover:bg-slate-700/50">
+                    <td class="px-6 py-4">21:30</td>
+                    <td class="px-6 py-4"><a href="devices.html?device=switch-03" class="text-cyan-400 hover:underline">Switch-03</a></td>
+                    <td class="px-6 py-4"><a href="event-details.html?id=2" class="hover:underline">Port Down</a></td>
+                    <td class="px-6 py-4"><span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold bg-red-500/10 text-red-400">Critical</span></td>
+                </tr>
+                <tr class="border-b border-slate-700 hover:bg-slate-700/50">
+                    <td class="px-6 py-4">20:15</td>
+                    <td class="px-6 py-4"><a href="devices.html?device=firewall-01" class="text-cyan-400 hover:underline">Firewall-01</a></td>
+                    <td class="px-6 py-4"><a href="event-details.html?id=3" class="hover:underline">Login Attempt Failed</a></td>
+                    <td class="px-6 py-4"><span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-400">Warning</span></td>
+                </tr>
+                <tr class="border-b border-slate-700 hover:bg-slate-700/50">
+                    <td class="px-6 py-4">18:30</td>
+                    <td class="px-6 py-4"><a href="devices.html?device=router-02" class="text-cyan-400 hover:underline">Router-02</a></td>
+                    <td class="px-6 py-4"><a href="event-details.html?id=4" class="hover:underline">Interface Flapping</a></td>
+                    <td class="px-6 py-4"><span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold bg-sky-500/10 text-sky-400">Info</span></td>
+                </tr>
+                <tr class="hover:bg-slate-700/50">
+                    <td class="px-6 py-4">15:22</td>
+                    <td class="px-6 py-4"><a href="devices.html?device=nas-01" class="text-cyan-400 hover:underline">NAS-01</a></td>
+                    <td class="px-6 py-4"><a href="event-details.html?id=5" class="hover:underline">Disk Space Low</a></td>
+                    <td class="px-6 py-4"><span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-400">Warning</span></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </section>
