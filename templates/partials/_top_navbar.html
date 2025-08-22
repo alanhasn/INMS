@@ -1,7 +1,4 @@
 {% load static %}
-<!-- ====================== -->
-<!-- HEADER / TOP NAV       -->
-<!-- ====================== -->
 <header class="sticky top-0 z-20 bg-slate-900/80 backdrop-blur-lg border-b border-slate-800">
     <div class="px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
         <!-- Mobile Menu Toggle -->
@@ -9,12 +6,12 @@
             <i class='bx bx-menu text-2xl'></i>
         </button>
 
-        <!-- Placeholder for search or other actions -->
+        <!-- This div pushes the user menu to the right -->
         <div class="flex-1"></div>
 
         <!-- User Dropdown -->
         <div class="relative">
-            <button type="button" id="user-dropdown-button" class="flex items-center justify-center w-10 h-10 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-cyan-500 bord">
+            <button type="button" id="user-dropdown-button" class="flex items-center justify-center w-10 h-10 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-cyan-500">
                 {% if user.profile.profile_image %}
                     <img class="w-full h-full rounded-full object-cover" src="{{ user.profile.profile_image.url }}" alt="User Profile Photo">
                 {% else %}

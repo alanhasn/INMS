@@ -1,0 +1,54 @@
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+        const sidebarCollapse = document.getElementById('sidebarCollapse');
+        const userDropdownButton = document.getElementById('user-dropdown-button');
+        const userDropdownMenu = document.getElementById('user-dropdown-menu');
+
+        function toggleSidebar() {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('hidden');
+            document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
+        }
+
+        function closeSidebar() {
+            if (sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
+                overlay.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+        }
+
+        if (sidebarCollapse) sidebarCollapse.addEventListener('click', (e) => { e.stopPropagation(); toggleSidebar(); });
+        if (overlay) overlay.addEventListener('click', closeSidebar);
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeSidebar(); });
+
+        if (userDropdownButton) {
+            userDropdownButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                userDropdownMenu.classList.toggle('hidden');
+            });
+        }
+        document.addEventListener('click', (e) => {
+            if (userDropdownMenu && !userDropdownMenu.classList.contains('hidden') && !userDropdownButton.contains(e.target)) {
+                userDropdownMenu.classList.add('hidden');
+            }
+        });
+
+        // Modal Handling
+        document.querySelectorAll('[data-modal-toggle]').forEach(button => {
+            button.addEventListener('click', () => {
+                const modal = document.getElementById(button.getAttribute('data-modal-toggle'));
+                if (modal) modal.classList.remove('hidden');
+            });
+        });
+
+        document.querySelectorAll('[data-modal-close]').forEach(button => {
+            button.addEventListener('click', () => {
+                const modal = button.closest('.modal-container');
+                if (modal) modal.classList.add('hidden');
+            });
+        });
+    });
+</script>

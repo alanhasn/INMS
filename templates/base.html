@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}INMS Dashboard{% endblock %}</title>
+    
+    <!-- Tailwind CSS, Icons, and Fonts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="{% static 'img/logo.svg' %}" type="image/x-icon">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+        #sidebar.active { transform: translateX(0); }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="bg-slate-900 text-slate-300 antialiased">
+    <div class="relative min-h-screen md:flex">
+        <!-- Mobile Overlay -->
+        <div id="overlay" class="fixed inset-0 bg-black/60 z-30 hidden md:hidden"></div>
+
+        <!-- Sidebar (Shared Partial) -->
+        {% include 'partials/_sidebar.html' %}
+
+        <!-- Main Content Area -->
+        <main class="flex-1 transition-all duration-300 ease-in-out md:ml-64">
+            <!-- Header (Shared Partial) -->
+            {% include 'partials/_top_navbar.html' %}
+
+            <!-- Page Specific Content -->
+            <div class="p-4 sm:p-6 lg:p-8">
+                {% block content %}
+                {# This is where the unique content of each page will go #}
+                {% endblock %}
+            </div>
+        </main>
+    </div>
+
+    <!-- Shared JavaScript -->
+    {% include 'partials/main_js.html' %}
+    
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

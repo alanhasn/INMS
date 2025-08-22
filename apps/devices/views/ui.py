@@ -1,18 +1,11 @@
 from django.shortcuts import render
 from ..forms import DeviceForm
+from ...users.models import Profile
 
 def test(request):
-    return render(request , "devices/devices.html") 
-
-def add_devices(request):
-    form = DeviceForm(request.POST or None)
-    if form.is_valid():
-        devices = form.save(commit=False)
-        devices.owner = request.user
-        devices.save()
-    else:
-        form = DeviceForm()
+    profile  = Profile.objects.get(user=request.user) # Get the user profile
     context = {
-        "form": form,
+        "profile": profile # -> User Profile Info
     }
-    return render(request, "devices/devices.html", context=context)
+    return render(request , "devices/devices.html" , context) 
+

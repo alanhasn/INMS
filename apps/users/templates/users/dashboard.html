@@ -1,132 +1,19 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en" class="dark">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INMS - Internal Network Management System</title>
+{% extends 'base.html' %}
+
+{% block title %}Admin Dashboard - INMS{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<header class="flex items-center gap-3 mb-8">
+    <i class='bx bxs-dashboard text-3xl text-cyan-400'></i>
+    <h1 class="text-2xl sm:text-3xl font-bold text-white">Admin Dashboard</h1>
+</header>
+
+<div class="space-y-8">
+    <!-- Statistics Cards -->
+    {% include 'partials/users/stats_card.html' %}
     
-    <!-- Tailwind CSS via CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Icons and Fonts -->
-    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <link rel="shortcut icon" href="{% static 'img/logo.svg' %}" type="image/x-icon">
-
-    <style>
-        /* Custom font */
-        body { font-family: 'Inter', sans-serif; }
-        
-        /* Custom scrollbar for a better dark mode aesthetic */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #1e293b; }
-        ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
-
-        /* Helper class for the sidebar JS toggle */
-        #sidebar.active {
-            transform: translateX(0);
-        }
-    </style>
-</head>
-<body class="bg-slate-900 text-slate-300 antialiased">
-
-    <div class="relative min-h-screen md:flex">
-        <!-- Mobile Overlay -->
-        <div id="overlay" class="fixed inset-0 bg-black/50 z-30 hidden md:hidden"></div>
-
-        <!-- Sidebar -->
-        {% include 'users/partials/sidebar.html' %}
-
-        <!-- Main Content Area -->
-        <main class="flex-1 transition-all duration-300 ease-in-out md:ml-64">
-            <!-- Header -->
-            {% include 'users/partials/header.html' %}
-
-            <!-- Dashboard Content -->
-            <div class="p-4 sm:p-6 lg:p-8 space-y-8">
-                <!-- Page Header -->
-                <header class="flex items-center gap-3">
-                    <i class='bx bxs-dashboard text-3xl text-cyan-400'></i>
-                    <h1 class="text-2xl sm:text-3xl font-bold text-white">Admin Dashboard</h1>
-                </header>
-
-                <!-- Statistics Cards -->
-                {% include 'users/partials/stats_card.html' %}
-                
-                <!-- Recent Events Table -->
-                {% include 'users/partials/events_table.html' %}
-            </div>
-        </main>
-    </div>
-
-    <!-- ====================== -->
-    <!-- JAVASCRIPT            -->
-    <!-- ====================== -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const sidebar = document.getElementById('sidebar');
-            const mainContent = document.querySelector('main');
-            const overlay = document.getElementById('overlay');
-            const sidebarCollapse = document.getElementById('sidebarCollapse');
-            const userDropdownButton = document.getElementById('user-dropdown-button');
-            const userDropdownMenu = document.getElementById('user-dropdown-menu');
-
-            function toggleSidebar() {
-                sidebar.classList.toggle('active');
-                overlay.classList.toggle('hidden');
-                
-                if (window.innerWidth < 768) {
-                    document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
-                }
-            }
-
-            function closeSidebar() {
-                if (sidebar.classList.contains('active')) {
-                    sidebar.classList.remove('active');
-                    overlay.classList.add('hidden');
-                    document.body.style.overflow = '';
-                }
-            }
-            
-            // --- Event Listeners ---
-            if (sidebarCollapse) {
-                sidebarCollapse.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    toggleSidebar();
-                });
-            }
-
-            if (overlay) {
-                overlay.addEventListener('click', closeSidebar);
-            }
-
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    closeSidebar();
-                    if (userDropdownMenu && !userDropdownMenu.classList.contains('hidden')) {
-                        userDropdownMenu.classList.add('hidden');
-                    }
-                }
-            });
-
-            if (userDropdownButton) {
-                userDropdownButton.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    userDropdownMenu.classList.toggle('hidden');
-                });
-            }
-
-            document.addEventListener('click', (e) => {
-                if (userDropdownMenu && !userDropdownMenu.classList.contains('hidden') && !userDropdownButton.contains(e.target)) {
-                    userDropdownMenu.classList.add('hidden');
-                }
-            });
-        });
-    </script>
-</body>
-</html>
+    <!-- Recent Events Table -->
+    {% include 'partials/users/events_table.html' %}
+</div>
+{% endblock %}

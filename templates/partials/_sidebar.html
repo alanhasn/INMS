@@ -1,0 +1,50 @@
+{% load static %}
+<aside id="sidebar" class="fixed inset-y-0 left-0 bg-slate-900 border-r border-slate-800 w-64 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out z-40 flex flex-col">
+    <div class="flex items-center gap-3 px-6 py-5 border-b border-slate-800">
+        <i class='bx bx-network-chart text-3xl text-cyan-400'></i>
+        <div>
+            <h3 class="text-xl font-bold text-white">INMS</h3>
+            <p class="text-xs text-slate-400">Network Management</p>
+        </div>
+    </div>
+    <nav class="flex-1 px-4 py-4">
+        <ul class="space-y-2">
+            <li>
+                <a href="{% url 'dashboard' %}" class="flex items-center gap-3 px-4 py-2.5 rounded-lg font-medium transition-colors {% if active_page == 'dashboard' %}bg-cyan-500/10 text-cyan-300{% else %}text-slate-300 hover:bg-slate-800 hover:text-white{% endif %}">
+                    <i class='bx bxs-dashboard text-xl'></i> <span>Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'devices:devices' %}" class="flex items-center gap-3 px-4 py-2.5 rounded-lg font-medium transition-colors {% if active_page == 'devices' %}bg-cyan-500/10 text-cyan-300{% else %}text-slate-300 hover:bg-slate-800 hover:text-white{% endif %}">
+                    <i class='bx bx-server text-xl'></i> <span>Devices</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'events:events' %}" class="flex items-center gap-3 px-4 py-2.5 rounded-lg font-medium transition-colors {% if active_page == 'events' %}bg-cyan-500/10 text-cyan-300{% else %}text-slate-300 hover:bg-slate-800 hover:text-white{% endif %}">
+                    <i class='bx bx-bell text-xl'></i> <span>Events</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="flex items-center gap-3 px-4 py-2.5 rounded-lg font-medium transition-colors {% if active_page == 'reports' %}bg-cyan-500/10 text-cyan-300{% else %}text-slate-300 hover:bg-slate-800 hover:text-white{% endif %}">
+                    <i class='bx bx-file text-xl'></i> <span>Reports</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+
+    <div class="flex items-center gap-3 px-6 py-5 border-t border-slate-800">
+        
+        {% if user.profile.profile_image %}
+            <a href="{% url "profile" %}"><img class="w-10 h-10 rounded-full object-cover" src="{{ user.profile.profile_image.url }}" alt="User Profile Photo"></a>
+        {% else %}
+           <a href="{% url "edit_profile" %}"> <img class="w-10 h-10 rounded-full object-cover" src="{% static 'img/profile-image.jpg' %}" alt="Default Profile Photo"></a>
+        {% endif %}
+            
+        <div>
+            <a href="{% url "profile" %}"><h3 class="text-sm font-semibold text-white">{{ user.username }}</h3></a>
+            <p class="text-xs text-slate-400">{{ user.email|truncatechars:25 }}</p>
+        </div>
+    </div>
+</aside>
+</aside>

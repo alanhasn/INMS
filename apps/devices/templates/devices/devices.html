@@ -1,139 +1,129 @@
-{% extends './base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Devices - NetManager{% endblock %}
+{% block title %}Devices - INMS{% endblock %}
+
 {% block content %}
-    <!-- Page Header -->
-    <header class="page-header mb-4">
-        <div class="d-flex justify-content-between align-items-center">
-            <div class="d-flex align-items-center gap-2">
-                <i class='bx bx-server fs-3 text-primary'></i>
-                <h2 class="mb-0">Device Management</h2>
-            </div>
-            <button class="btn btn-primary d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#addDeviceModal">
-                <i class='bx bx-plus-circle'></i>
-                <span>Add Device</span>
-            </button>
+<!-- Page Header -->
+<header class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+    <div class="flex items-center gap-3">
+        <i class='bx bx-server text-3xl text-cyan-400'></i>
+        <h1 class="text-2xl sm:text-3xl font-bold text-white">Device Management</h1>
+    </div>
+    <button type="button" data-modal-toggle="addDeviceModal" class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-cyan-500 hover:bg-cyan-600 text-slate-900 font-semibold rounded-lg shadow-md transition-all duration-300">
+        <i class='bx bx-plus-circle text-xl'></i>
+        <span>Add Device</span>
+    </button>
+</header>
+
+<!-- Filters Card -->
+<div class="bg-slate-800 border border-slate-700 rounded-xl shadow-lg p-4 sm:p-6 mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+        <!-- Device Type Filter -->
+        <div>
+            <label for="deviceTypeFilter" class="flex items-center gap-2 text-sm font-medium text-slate-400 mb-2">
+                <i class='bx bx-devices text-cyan-400'></i> Device Type
+            </label>
+            <select id="deviceTypeFilter" class="w-full bg-slate-700 border border-slate-600 text-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500">
+                <option value="">All Types</option>
+                <option value="router">Router</option>
+                <option value="switch">Switch</option>
+                <option value="server">Server</option>
+                <option value="firewall">Firewall</option>
+                <option value="workstation">Workstation</option>
+            </select>
         </div>
-    </header>
-    
-    <!-- Filters -->
-    <div class="dashboard-card mb-4">
-        <div class="row">
-            <div class="col-md-3 mb-3">
-                <label for="deviceTypeFilter" class="form-label d-flex align-items-center gap-2">
-                    <i class='bx bx-devices text-primary'></i> Device Type
-                </label>
-                <select class="form-select" id="deviceTypeFilter">
-                    <option value="">All Types</option>
-                    <option value="router">Router</option>
-                    <option value="switch">Switch</option>
-                    <option value="server">Server</option>
-                    <option value="firewall">Firewall</option>
-                    <option value="workstation">Workstation</option>
-                </select>
-            </div>
-            <div class="col-md-3 mb-3">
-                <label for="statusFilter" class="form-label d-flex align-items-center gap-2">
-                    <i class='bx bx-signal-5 text-primary'></i> Status
-                </label>
-                <select class="form-select" id="statusFilter">
-                    <option value="">All Statuses</option>
-                    <option value="online">Online</option>
-                    <option value="offline">Offline</option>
-                    <option value="maintenance">Maintenance</option>
-                    <option value="warning">Warning</option>
-                </select>
-            </div>
-            <div class="col-md-4 mb-3">
-                <label for="searchFilter" class="form-label d-flex align-items-center gap-2">
-                    <i class='bx bx-search text-primary'></i> Quick Search
-                </label>
-                <input type="text" class="form-control" id="searchFilter" 
-                       placeholder="Search by name, IP, or location">
-            </div>
-            <div class="col-md-2 mb-3 d-flex align-items-end">
-                <button class="btn btn-primary w-100 d-flex align-items-center justify-content-center gap-2" id="applyFilters">
+        <!-- Status Filter -->
+        <div>
+            <label for="statusFilter" class="flex items-center gap-2 text-sm font-medium text-slate-400 mb-2">
+                <i class='bx bx-signal-5 text-cyan-400'></i> Status
+            </label>
+            <select id="statusFilter" class="w-full bg-slate-700 border border-slate-600 text-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500">
+                <option value="">All Statuses</option>
+                <option value="online">Online</option>
+                <option value="offline">Offline</option>
+                <option value="maintenance">Maintenance</option>
+                <option value="warning">Warning</option>
+            </select>
+        </div>
+        <!-- Search Filter -->
+        <div class="xl:col-span-2">
+            <label for="searchFilter" class="flex items-center gap-2 text-sm font-medium text-slate-400 mb-2">
+                <i class='bx bx-search text-cyan-400'></i> Quick Search
+            </label>
+            <div class="flex gap-4">
+                <input type="text" id="searchFilter" class="w-full bg-slate-700 border border-slate-600 text-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500" placeholder="Search by name, IP, or location">
+                <button id="applyFilters" class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white font-semibold rounded-lg transition-colors">
                     <i class='bx bx-filter-alt'></i>
-                    <span>Apply Filters</span>
+                    <span>Apply</span>
                 </button>
             </div>
         </div>
     </div>
-    
-    <!-- Devices Table -->
-    <div class="dashboard-card">
-        <div class="table-responsive">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>Device Name</th>
-                        <th>Type</th>
-                        <th>IP Address</th>
-                        <th>Location</th>
-                        <th>Status</th>
-                        <th>Last Seen</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for device in devices %}
-                    <tr>
-                        <td class="align-middle">{{ device.name }}</td>
-                        <td class="align-middle">
-                            <div class="d-flex align-items-center gap-2">
-                                <i class='bx bx-{{ device.type|lower }} text-primary fs-5'></i>
-                                {{ device.type }}
-                            </div>
-                        </td>
-                        <td class="align-middle">{{ device.ip }}</td>
-                        <td class="align-middle">{{ device.location }}</td>
-                        <td class="align-middle">
-                            <span class="status-badge status-{{ device.status|lower }}">
-                                <i class='bx bxs-circle'></i>
-                                {{ device.status }}
-                            </span>
-                        </td>
-                        <td class="align-middle text-muted">{{ device.last_seen|default:"Never" }}</td>
-                        <td class="align-middle">
-                            <div class="d-flex gap-2 justify-content-end">
-                                <a href="{% url 'devices:device_detail' device.id %}" class="btn btn-sm btn-info">
-                                    <i class='bx bx-show'></i>
-                                </a>
-                                <a href="{% url 'devices:device_edit' device.id %}" class="btn btn-sm btn-warning">
-                                    <i class='bx bx-edit-alt'></i>
-                                </a>
-                                <form action="{% url 'devices:device_delete' device.id %}" method="post" class="d-inline">
-                                    {% csrf_token %}
-                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this device?')">
-                                        <i class='bx bx-trash'></i>
-                                    </button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                    {% empty %}
-                    <tr>
-                        <td colspan="7" class="text-center py-4">
-                            <div class="d-flex flex-column align-items-center gap-2">
-                                <i class='bx bx-server fs-1 text-muted'></i>
-                                <p class="text-muted mb-0">No devices found</p>
-                                <a href="" class="btn btn-primary btn-sm mt-2" data-bs-toggle="modal" data-bs-target="#addDeviceModal">
-                                    Add your first device
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
-    
-    {{ form }}
+</div>
 
-    {# Include the modals #}
-    {% include './includes/_add_device_modal.html' %}
-    {% include './includes/_device_details_modal.html' %}
+<!-- Devices Table -->
+<div class="bg-slate-800 border border-slate-700 rounded-xl shadow-lg overflow-x-auto">
+    <table class="w-full text-sm text-left text-slate-300">
+        <thead class="text-xs text-slate-400 uppercase bg-slate-800">
+            <tr>
+                <th class="px-6 py-3 font-medium">Device Name</th>
+                <th class="px-6 py-3 font-medium">Type</th>
+                <th class="px-6 py-3 font-medium">IP Address</th>
+                <th class="px-6 py-3 font-medium">Location</th>
+                <th class="px-6 py-3 font-medium">Status</th>
+                <th class="px-6 py-3 font-medium">Last Seen</th>
+                <th class="px-6 py-3 font-medium text-right">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for device in devices %}
+            <tr class="border-t border-slate-700 hover:bg-slate-700/50">
+                <td class="px-6 py-4 font-medium text-white">{{ device.name }}</td>
+                <td class="px-6 py-4 capitalize">{{ device.type }}</td>
+                <td class="px-6 py-4 font-mono">{{ device.ip }}</td>
+                <td class="px-6 py-4">{{ device.location }}</td>
+                <td class="px-6 py-4">
+                    {% if device.status|lower == 'online' %}
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400"><i class='bx bxs-circle'></i> Online</span>
+                    {% elif device.status|lower == 'offline' %}
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-red-500/10 text-red-400"><i class='bx bxs-circle'></i> Offline</span>
+                    {% elif device.status|lower == 'maintenance' %}
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-500/10 text-blue-400"><i class='bx bxs-circle'></i> Maintenance</span>
+                    {% else %}
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-400"><i class='bx bxs-circle'></i> Warning</span>
+                    {% endif %}
+                </td>
+                <td class="px-6 py-4 text-slate-400">{{ device.last_seen|default:"Never" }}</td>
+                <td class="px-6 py-4">
+                    <div class="flex items-center justify-end gap-2">
+                        <a href="{% url 'devices:device_detail' device.id %}" class="p-2 rounded-md hover:bg-sky-500/20 text-sky-400 transition-colors"><i class='bx bx-show'></i></a>
+                        <a href="{% url 'devices:device_edit' device.id %}" class="p-2 rounded-md hover:bg-amber-500/20 text-amber-400 transition-colors"><i class='bx bx-edit-alt'></i></a>
+                        <form action="{% url 'devices:device_delete' device.id %}" method="post" class="inline">
+                            {% csrf_token %}
+                            <button type="submit" onclick="return confirm('Are you sure you want to delete this device?')" class="p-2 rounded-md hover:bg-red-500/20 text-red-400 transition-colors"><i class='bx bx-trash'></i></button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7" class="text-center py-12 px-6 border-t border-slate-700">
+                    <div class="flex flex-col items-center gap-3">
+                        <i class='bx bx-server text-5xl text-slate-600'></i>
+                        <p class="text-slate-400">No devices found.</p>
+                        <button type="button" data-modal-toggle="addDeviceModal" class="mt-2 inline-flex items-center justify-center gap-2 px-4 py-2 bg-cyan-500 hover:bg-cyan-600 text-slate-900 font-semibold rounded-lg shadow-md transition-all duration-300">
+                            Add your first device
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 
+{# Include the modals from the devices app's template folder #}
+{% include 'partials/devices/_add_device_modal.html' %}
+{% include 'partials/devices/_device_details_modal.html' %}
 {% endblock %}

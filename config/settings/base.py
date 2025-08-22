@@ -6,26 +6,22 @@ This allows us to import custom apps from the 'apps' directory
 now we can import apps from the 'apps' directory just if we type the name of the app
 without the need to specify the full path
 '''
+
 import sys
-import os
-# ----------------------------------------------------------------------------------
-sys.path.append(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'apps'))
-# ----------------------------------------------------------------------------------
-
-
-
 from pathlib import Path
 from decouple import config
 from datetime import timedelta
 import os
 
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+# ----------------------------------------------------------------------------------
+BASE_DIR = Path(__file__).resolve().parent.parent.parent  # This is the base directory of the project
+# Add the apps directory to the Python path
+sys.path.append(str(BASE_DIR / 'apps'))  # This allows us to import apps from the 'apps' directory
+#-----------------------------------------------------------------------------------
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('DJANGO_SECRET_KEY')
+SECRET_KEY = config('DJANGO_SECRET_KEY',default='django-insecure-!@#%$^&*()_+1234567890-=qwertyuiopasdfghjklzxcvbnm')
 
 # Application definition
 # Custom Apps
@@ -51,8 +47,6 @@ INSTALLED_APPS = [
     "rest_framework",
     # Django rest framwork JWT
     "rest_framework_simplejwt",
-    # django silk
-    "silk",
     # django widget tweaks
     "widget_tweaks",
 
@@ -110,7 +104,6 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'silk.middleware.SilkyMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -122,7 +115,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -216,4 +209,3 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-

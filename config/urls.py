@@ -15,8 +15,6 @@ urlpatterns = [
 
     # Social Auth app
     path('oauth/', include('social_django.urls', namespace='social')),
-    # Django Silk url
-    path('silk/', include('silk.urls', namespace='silk')),
     #-----------------------------------------------------------------
     # API and UI URLs for different apps
     path('api/users/', include(('apps.users.urls.api_urls'), namespace='users_api')),
