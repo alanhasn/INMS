@@ -25,7 +25,7 @@
                 </a>
             </li>
             <li>
-                <a href="#" class="flex items-center gap-3 px-4 py-2.5 rounded-lg font-medium transition-colors {% if active_page == 'reports' %}bg-cyan-500/10 text-cyan-300{% else %}text-slate-300 hover:bg-slate-800 hover:text-white{% endif %}">
+                <a href="{% url 'reports:reports' %}" class="flex items-center gap-3 px-4 py-2.5 rounded-lg font-medium transition-colors {% if active_page == 'reports' %}bg-cyan-500/10 text-cyan-300{% else %}text-slate-300 hover:bg-slate-800 hover:text-white{% endif %}">
                     <i class='bx bx-file text-xl'></i> <span>Reports</span>
                 </a>
             </li>

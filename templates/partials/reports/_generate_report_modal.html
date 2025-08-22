@@ -1,0 +1,68 @@
+<!-- Generate New Report Modal -->
+<div id="generateReportModal" class="modal-container hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+    <div class="w-full max-w-lg bg-slate-800 border border-slate-700 rounded-xl shadow-2xl">
+        <!-- Modal Header -->
+        <div class="flex items-center justify-between p-4 border-b border-slate-700">
+            <h5 class="flex items-center gap-2 text-lg font-semibold text-white">
+                <i class='bx bx-plus-circle text-cyan-400'></i> Generate New Report
+            </h5>
+            <button type="button" data-modal-close class="p-1 rounded-full text-slate-400 hover:bg-slate-700 hover:text-white">
+                <i class='bx bx-x text-2xl'></i>
+            </button>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="p-6">
+            <form id="generateReportForm" class="space-y-4">
+                
+                <!-- Report Name (CharField) -->
+                <div>
+                    <label for="reportName" class="block text-sm font-medium text-slate-400 mb-2">Report Name</label>
+                    <input type="text" id="reportName" name="report_name" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 focus:ring-2 focus:ring-cyan-500" required placeholder="e.g., Q1 Security Audit">
+                </div>
+                
+                <!-- Report Type (CharField as a dropdown) -->
+                <div>   
+                    <label for="reportType" class="block text-sm font-medium text-slate-400 mb-2">Report Type</label>
+                    <select id="reportType" name="report_type" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 focus:ring-2 focus:ring-cyan-500" required>
+                        <option value="" disabled selected>Select a report type...</option>
+                        <option value="Performance">Performance</option>
+                        <option value="Security">Security</option>
+                        <option value="Compliance">Compliance</option>
+                        <option value="Usage">Usage</option>
+                        <option value="Audit">Audit</option>
+                        <option value="NetworkTopology">Network Topology</option>
+                        <option value="Custom">Custom
+                        <option value="Inventory">Inventory</option>
+                    </select>
+                </div>
+
+                <!-- Device (ForeignKey) -->
+                <div>
+                    <label for="reportDevice" class="block text-sm font-medium text-slate-400 mb-2">Target Device</label>
+                    <select id="reportDevice" name="device" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 focus:ring-2 focus:ring-cyan-500" required>
+                        <option value="" disabled selected>Select a device...</option>
+                        
+                        {# IMPORTANT: This loop requires a 'devices' variable from your view #}
+                        {% for device in devices %}
+                            <option value="{{ device.id }}">{{ device.name }} ({{ device.ip }})</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Report Description (TextField) -->
+                <div>
+                    <label for="reportDescription" class="block text-sm font-medium text-slate-400 mb-2">Report Description</label>
+                    <textarea id="reportDescription" name="report_description" rows="4" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 focus:ring-2 focus:ring-cyan-500" placeholder="Optional: add any notes or details for this report..."></textarea>
+                </div>
+
+            </form>
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="flex items-center justify-end gap-3 p-4 border-t border-slate-700">
+            <button type="button" data-modal-close class="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white font-semibold rounded-lg transition-colors">Cancel</button>
+            <button type="button" onclick="generateReport()" class="px-4 py-2 bg-cyan-500 hover:bg-cyan-600 text-slate-900 font-semibold rounded-lg shadow-md transition-colors">Generate Report</button>
+        </div>
+    </div>
+</div>
