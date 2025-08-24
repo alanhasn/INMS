@@ -6,26 +6,40 @@
             <i class='bx bx-menu text-2xl'></i>
         </button>
 
-        <!-- This div pushes the user menu to the right -->
+        <!-- This div pushes the actions to the right -->
         <div class="flex-1"></div>
 
-        <!-- User Dropdown -->
-        <div class="relative">
-            <button type="button" id="user-dropdown-button" class="flex items-center justify-center w-10 h-10 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-cyan-500">
-                {% if user.profile.profile_image %}
-                    <img class="w-full h-full rounded-full object-cover" src="{{ user.profile.profile_image.url }}" alt="User Profile Photo">
-                {% else %}
-                    <!-- Fallback to a default image if no profile image is set -->
-                    <img class="w-full h-full rounded-full object-cover" src="{% static 'img/profile-image.jpg' %}" alt="Default Profile Photo">
-                {% endif %}
-            </button>
+        <!-- Right-side actions container -->
+        <div class="flex items-center gap-x-4">
             
-            <div id="user-dropdown-menu" class="hidden absolute right-0 mt-2 w-48 bg-slate-800 border border-slate-700 rounded-lg shadow-xl py-1 z-50">
-                <a class="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-700/50 hover:text-white" href="{% url 'profile' %}">Profile</a>
-                <a class="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-700/50 hover:text-white" href="#">Settings</a>
-                <div class="my-1 border-t border-slate-700"></div>
-                <a class="block px-4 py-2 text-sm text-red-400 hover:bg-slate-700/50 hover:text-red-300" href="{% url 'logout' %}">Logout</a>
+            <!-- NEW GitHub Source Code Button -->
+            <a href="https://github.com/alanhasn/https://github.com/alanhasn/Internal-Network-Management-System" 
+               target="_blank" 
+               rel="noopener noreferrer" 
+               title="View Source on GitHub"
+               class="flex items-center justify-center w-10 h-10 rounded-full text-slate-400 hover:bg-slate-800 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-cyan-500 transition-colors">
+                <i class='bx bxl-github text-2xl'></i>
+            </a>
+
+            <!-- User Dropdown -->
+            <div class="relative">
+                <button type="button" id="user-dropdown-button" class="flex items-center justify-center w-10 h-10 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-cyan-500">
+                    {% if user.profile.profile_image %}
+                        <img class="w-full h-full rounded-full object-cover" src="{{ user.profile.profile_image.url }}" alt="User Profile Photo">
+                    {% else %}
+                        <!-- Fallback to a default image if no profile image is set -->
+                        <img class="w-full h-full rounded-full object-cover" src="{% static 'img/profile-image.jpg' %}" alt="Default Profile Photo">
+                    {% endif %}
+                </button>
+                
+                <div id="user-dropdown-menu" class="hidden absolute right-0 mt-2 w-48 bg-slate-800 border border-slate-700 rounded-lg shadow-xl py-1 z-50">
+                    <a class="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-700/50 hover:text-white" href="{% url 'profile' %}">Profile</a>
+                    <a class="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-700/50 hover:text-white" href="#">Settings</a>
+                    <div class="my-1 border-t border-slate-700"></div>
+                    <a class="block px-4 py-2 text-sm text-red-400 hover:bg-slate-700/50 hover:text-red-300" href="{% url 'logout' %}">Logout</a>
+                </div>
             </div>
-        </div>
+
+        </div>        
     </div>
 </header>

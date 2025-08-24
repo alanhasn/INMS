@@ -11,52 +11,40 @@
         <h1 class="text-2xl sm:text-3xl font-bold text-white">Network Events</h1>
     </div>
 
-    <!-- ACTION BUTTONS (MODIFIED SECTION) -->
     <div class="flex items-center gap-3">
-        <!-- New "Add Event" Button (Primary Action) -->
         <button type="button" data-modal-toggle="addEventModal" class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-cyan-500 hover:bg-cyan-600 text-slate-900 font-semibold rounded-lg shadow-md transition-colors">
             <i class='bx bx-plus-circle text-lg'></i>
             <span>Add New Event</span>
         </button>
-
-
-        <!-- Secondary Buttons -->
-        <button type="button" class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white font-semibold rounded-lg shadow-md transition-colors">
-            <i class='bx bx-filter-alt text-lg'></i>
-            <span>Filter</span>
-        </button>
-        <button type="button" class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white font-semibold rounded-lg shadow-md transition-colors">
-            <i class='bx bx-export text-lg'></i>
-            <span>Export</span>
-        </button>
+        <!-- ... other buttons ... -->
     </div>
 </header>
 
-<!-- Event Summary Cards -->
+<!-- DYNAMIC Event Summary Cards -->
 <section class="grid grid-cols-1 gap-6 mb-8 sm:grid-cols-2 xl:grid-cols-4">
     <div class="p-6 bg-slate-800 border border-slate-700 rounded-xl shadow-lg border-t-4 border-red-500">
         <h5 class="text-sm font-medium text-slate-400">Critical Events</h5>
-        <h2 class="mt-1 text-4xl font-bold text-white">3</h2>
+        <h2 class="mt-1 text-4xl font-bold text-white">{{ critical_count }}</h2>
         <p class="mt-2 text-xs text-slate-500">Last 24 hours</p>
     </div>
     <div class="p-6 bg-slate-800 border border-slate-700 rounded-xl shadow-lg border-t-4 border-amber-500">
         <h5 class="text-sm font-medium text-slate-400">Warning Events</h5>
-        <h2 class="mt-1 text-4xl font-bold text-white">7</h2>
+        <h2 class="mt-1 text-4xl font-bold text-white">{{ warning_count }}</h2>
+        <p class="mt-2 text-xs text-slate-500">Last 24 hours</p>
+    </div>
+    <div class="p-6 bg-slate-800 border border-slate-700 rounded-xl shadow-lg border-t-4 border-orange-500">
+        <h5 class="text-sm font-medium text-slate-400">Error Events</h5>
+        <h2 class="mt-1 text-4xl font-bold text-white">{{ error_count }}</h2>
         <p class="mt-2 text-xs text-slate-500">Last 24 hours</p>
     </div>
     <div class="p-6 bg-slate-800 border border-slate-700 rounded-xl shadow-lg border-t-4 border-sky-500">
         <h5 class="text-sm font-medium text-slate-400">Info Events</h5>
-        <h2 class="mt-1 text-4xl font-bold text-white">15</h2>
-        <p class="mt-2 text-xs text-slate-500">Last 24 hours</p>
-    </div>
-    <div class="p-6 bg-slate-800 border border-slate-700 rounded-xl shadow-lg border-t-4 border-emerald-500">
-        <h5 class="text-sm font-medium text-slate-400">Resolved</h5>
-        <h2 class="mt-1 text-4xl font-bold text-white">12</h2>
+        <h2 class="mt-1 text-4xl font-bold text-white">{{ info_count }}</h2>
         <p class="mt-2 text-xs text-slate-500">Last 24 hours</p>
     </div>
 </section>
 
-<!-- Events Table -->
+<!-- DYNAMIC Events Table -->
 <div class="bg-slate-800 border border-slate-700 rounded-xl shadow-lg">
     <div class="overflow-x-auto">
         <table class="w-full text-sm text-left text-slate-300">
@@ -72,12 +60,21 @@
                 </tr>
             </thead>
             <tbody>
+                {% for event in events %}
                 <tr class="border-t border-slate-700 hover:bg-slate-700/50">
-                    <td class="px-6 py-4">2025-04-06 21:45</td>
-                    <td class="px-6 py-4 font-mono text-slate-400">EVT-001</td>
-                    <td class="px-6 py-4 font-medium text-white">Router-01</td>
-                    <td class="px-6 py-4">High CPU Usage (95%)</td>
-                    <td class="px-6 py-4"><span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-400">Warning</span></td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ event.event_date|date:"Y-m-d H:i" }}</td>
+                    <td class="px-6 py-4 font-mono text-slate-400">EVT-{{ event.id }}</td>
+                    <td class="px-6 py-4 font-medium text-white">{{ event.device.name }}</td>
+                    <td class="px-6 py-4">{{ event.event_description|truncatewords:12 }}</td>
+                    <td class="px-6 py-4">
+                        <span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold
+                            {% if event.severity == 'Critical' %} bg-red-500/10 text-red-400
+                            {% elif event.severity == 'Error' %} bg-orange-500/10 text-orange-400
+                            {% elif event.severity == 'Warning' %} bg-amber-500/10 text-amber-400
+                            {% else %} bg-sky-500/10 text-sky-400 {% endif %}">
+                            {{ event.get_severity_display }}
+                        </span>
+                    </td>
                     <td class="px-6 py-4 text-slate-400">Active</td>
                     <td class="px-6 py-4">
                         <div class="flex items-center justify-end gap-2">
@@ -86,20 +83,13 @@
                         </div>
                     </td>
                 </tr>
-                <tr class="border-t border-slate-700 hover:bg-slate-700/50">
-                    <td class="px-6 py-4">2025-04-06 21:30</td>
-                    <td class="px-6 py-4 font-mono text-slate-400">EVT-002</td>
-                    <td class="px-6 py-4 font-medium text-white">Switch-03</td>
-                    <td class="px-6 py-4">Port 24 Down</td>
-                    <td class="px-6 py-4"><span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold bg-red-500/10 text-red-400">Critical</span></td>
-                    <td class="px-6 py-4 text-slate-400">Active</td>
-                    <td class="px-6 py-4">
-                        <div class="flex items-center justify-end gap-2">
-                            <button class="p-2 rounded-md hover:bg-sky-500/20 text-sky-400 transition-colors" title="View Details"><i class='bx bx-show'></i></button>
-                            <button class="p-2 rounded-md hover:bg-emerald-500/20 text-emerald-400 transition-colors" title="Mark Resolved"><i class='bx bx-check'></i></button>
-                        </div>
+                {% empty %}
+                <tr class="border-t border-slate-700">
+                    <td colspan="7" class="text-center py-8 px-6 text-slate-500">
+                        <p>No events found in the system.</p>
                     </td>
                 </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>
@@ -115,5 +105,6 @@
         </nav>
     </div>
 </div>
+
 {% include 'partials/events/_add_event_modal.html' %}
 {% endblock %}
