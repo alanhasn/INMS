@@ -1,83 +1,97 @@
-# ===========Importing Required Libraries and Modules=========================
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import FileExtensionValidator
 from django.core.exceptions import ValidationError
-from django.contrib import messages
 from PIL import Image
 import os
-# -----------------------------------------------------------------------------
 
-# Custom validator for image size and dimensions
-def Image_Validator(image):
-    # Validate the image size and format
+def validate_image_file(image):
+    """
+    Field-level validator to ensure uploaded image is <=5 MB
+    and its dimensions don’t exceed 2000×2000.
+    """
     max_size = 5 * 1024 * 1024  # 5 MB
     if image.size > max_size:
-        raise ValidationError(f"Image file size should not exceed {max_size / (1024 * 1024)} MB.")
+        raise ValidationError("Image file size should not exceed 5 MB.")
 
-    # Validate the image dimensions
     try:
         img = Image.open(image)
-        max_width , max_hight = 2000 , 2000
-        if img.width > max_width or img.height > max_hight:
-            raise ValidationError(f"Image dimensions should not exceed {max_width}x{max_hight} pixels.")
-    except Exception as e:
-        raise ValidationError(f"Invalid image format: {e}")
+        img_width, img_height = img.size
+        if img_width > 2000 or img_height > 2000:
+            raise ValidationError("Image dimensions should not exceed 2000×2000 pixels.")
+    except ValidationError:
+        raise
+    except Exception:
+        raise ValidationError("Uploaded file is not a valid image.")
 
 
-# =================Profile Model========================================
-# This model is used to create a profile for the user.
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)  
-    profile_image = models.ImageField(upload_to="profile_images/", blank=False, null=False , verbose_name="Profile Image" ,
-                                      help_text="Upload a profile image",
-                                      validators=[
-                                          FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png']),
-                                          Image_Validator 
-                                        ],
-                                        default='')
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     
-    first_name = models.CharField(max_length=100, blank=False, null=False, default='')
-    last_name = models.CharField(max_length=100, blank=False, null=False,default='')
-    bio = models.TextField(blank=False, null=False , max_length=100 ,default='')
-    phone_number = models.CharField(max_length=15, blank=False, null=False,default='')
-    country = models.CharField(max_length=100, blank=True, null=True)
-    city = models.CharField(max_length=100, blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True) 
+    profile_image = models.ImageField(
+        upload_to="profile_images/",
+        blank=True,
+        null=True,
+        validators=[
+            FileExtensionValidator(allowed_extensions=["jpg", "jpeg", "png"]),
+            validate_image_file,
+        ],
+        help_text="Upload a JPEG or PNG up to 5 MB and max 2000×2000px."
+    )
+
+    first_name = models.CharField(max_length=100, blank=True)
+    last_name  = models.CharField(max_length=100, blank=True)
+    bio        = models.TextField(blank=True, max_length=500)
+    phone_number = models.CharField(max_length=15, blank=True)
+    country    = models.CharField(max_length=100, blank=True)
+    city       = models.CharField(max_length=100, blank=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def clean(self):
+        """
+        Model-level validation that ties together multiple fields:
+        - At least one of first_name/last_name must be provided.
+        - Phone number must be digits-only and at least 10 digits.
+        """
+        super().clean()
 
-    # save method to resize image after upload
+        # 1) At least one name
+        if not (self.first_name or self.last_name):
+            raise ValidationError("At least one of First Name or Last Name must be provided.")
+
+        # 2) Phone number format
+        if self.phone_number:
+            if not self.phone_number.isdigit():
+                raise ValidationError({"phone_number": "Phone number must contain only digits."})
+            if len(self.phone_number) < 10:
+                raise ValidationError({"phone_number": "Phone number must be at least 10 digits long."})
+
     def save(self, *args, **kwargs):
+        # Run full_clean() so all field validators and clean() get called.
+        self.full_clean()
+
+        # Save instance (so we have a self.profile_image.path to work with)
         super().save(*args, **kwargs)
-        if self.profile_image and os.path.isfile(self.profile_image.path):
+
+        # Resize the image to max 300×300
+        if self.profile_image and os.path.exists(self.profile_image.path):
             try:
-                img = Image.open(self.profile_image.path) # Open the image file
-                img = img.convert("RGB") # Convert the image to RGB mode if not already
-                if img.height > 300 or img.width > 300:
-                    output_size = (300, 300)
-                    img.thumbnail(output_size) # Resize the image to fit within 300x300 pixels
-                    img.save(self.profile_image.path, format=img.format) # Save the resized image
-                img.close() 
-            except Exception as e:
-                raise ValidationError(f"Error processing image: {e}")
-            
-        if self.phone_number and not self.phone_number.isdigit():
-            raise ValidationError(
-                "Phone number must contain only digits."
-            )
-        if self.phone_number and len(self.phone_number) < 10:
-            raise ValidationError(
-                "Phone number must be at least 10 digits long."
-            )
+                img = Image.open(self.profile_image.path)
+                img = img.convert("RGB")
+                max_size = (300, 300)
+                if img.width > 300 or img.height > 300:
+                    img.thumbnail(max_size, Image.ANTIALIAS)
+                    img.save(self.profile_image.path, format="JPEG", quality=90)
+            except Exception:
+                # If resizing fails, fail silently so profile still saves.
+                pass
+
     class Meta:
-        # class meta for customizing the admin interface
         verbose_name = "Profile"
         verbose_name_plural = "Profiles"
         ordering = ["-created_at"]
-
-        # Define indexes for the model
-        # This is optional but can help with query performance
         indexes = [
             models.Index(fields=["user"]),
             models.Index(fields=["created_at"]),

@@ -1,8 +1,20 @@
 <!-- Add Device Modal -->
-<div id="addDeviceModal" class="modal-container hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-    <div class="w-full max-w-2xl bg-slate-800 border border-slate-700 rounded-xl shadow-2xl">
-        <!-- Modal Header -->
-        <div class="flex items-center justify-between p-4 border-b border-slate-700">
+<!-- 
+    Key Responsive Changes:
+    - overflow-y-auto: Adds a scrollbar ONLY if the content is taller than the screen.
+    - sm:items-center: Keeps it vertically centered on larger screens.
+-->
+<div id="addDeviceModal" class="modal-container hidden fixed inset-0 z-50 flex items-start sm:items-center justify-center p-4 bg-black/60 backdrop-blur-sm overflow-y-auto">
+    
+    <!--
+        Key Responsive Changes:
+        - sm:max-w-2xl: Uses a smaller max-width on small-medium screens for better scaling.
+        - flex flex-col max-h-[95vh]: Turns the modal into a flex column and prevents it from ever being taller than 95% of the viewport height.
+    -->
+    <div class="w-full max-w-lg sm:max-w-2xl bg-slate-800 border border-slate-700 rounded-xl shadow-2xl flex flex-col max-h-[95vh]">
+        
+        <!-- Modal Header (Remains fixed at the top) -->
+        <div class="flex-shrink-0 flex items-center justify-between p-4 border-b border-slate-700">
             <h5 class="flex items-center gap-2 text-lg font-semibold text-white">
                 <i class='bx bx-plus-circle text-cyan-400'></i> Add New Device
             </h5>
@@ -11,60 +23,70 @@
             </button>
         </div>
 
-        <!-- Modal Body -->
-        <div class="p-6">
-            <form id="addDeviceForm" class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
-                <!-- Device Name -->
-                <div>
-                    <label for="newDeviceName" class="block text-sm font-medium text-slate-400 mb-2">Device Name</label>
-                    <input type="text" id="newDeviceName" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 focus:ring-2 focus:ring-cyan-500" required>
-                </div>
-                <!-- Device Type -->
-                <div>
-                    <label for="newDeviceType" class="block text-sm font-medium text-slate-400 mb-2">Device Type</label>
-                    <select id="newDeviceType" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 focus:ring-2 focus:ring-cyan-500" required>
-                        <option value="">Select type...</option>
-                        <option value="router">Router</option>
-                        <option value="switch">Switch</option>
-                        <option value="server">Server</option>
-                        <option value="firewall">Firewall</option>
-                        <option value="workstation">Workstation</option>
-                        <option value="access_point">Access Point</option>
-                        <option value="printer">Printer</option>
-                        <option value="other">Other</option>
-                    </select>
-                </div>
-                <!-- IP Address -->
-                <div>
-                    <label for="newDeviceIp" class="block text-sm font-medium text-slate-400 mb-2">IP Address</label>
-                    <input type="text" id="newDeviceIp" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 focus:ring-2 focus:ring-cyan-500" required>
-                </div>
-                <!-- Location -->
-                <div>
-                    <label for="newDeviceLocation" class="block text-sm font-medium text-slate-400 mb-2">Location</label>
-                    <input type="text" id="newDeviceLocation" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 focus:ring-2 focus:ring-cyan-500" required>
-                </div>
-                 <!-- Status -->
-                <div class="md:col-span-2">
-                    <label for="newDeviceStatus" class="block text-sm font-medium text-slate-400 mb-2">Status</label>
-                    <select id="newDeviceStatus" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 focus:ring-2 focus:ring-cyan-500" required>
-                        <option value="">Select status...</option>
-                        <option value="online">Online</option>
-                        <option value="offline">Offline</option>
-                    </select>
-                </div>
-                <!-- Description -->
-                <div class="md:col-span-2">
-                    <label for="newDeviceDescription" class="block text-sm font-medium text-slate-400 mb-2">Description</label>
-                    <textarea id="newDeviceDescription" rows="3" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 focus:ring-2 focus:ring-cyan-500"></textarea>
+        <!-- 
+            Modal Body (SCROLLABLE)
+            - flex-1: Makes this section grow to fill available space.
+            - overflow-y-auto: The content inside this div will scroll, not the whole modal.
+        -->
+        <div class="p-6 flex-1 overflow-y-auto">
+            <!-- Added method, action, and removed grid layout from form tag -->
+            <form id="addDeviceForm" method="POST">
+                {% csrf_token %}
+                <!-- The responsive grid is now on a wrapper div -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+                    <!-- Device Name -->
+                    <div>
+                        <label for="newDeviceName" class="block text-sm font-medium text-slate-400 mb-2">Device Name</label>
+                        <input type="text" id="newDeviceName" name="name" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 focus:ring-2 focus:ring-cyan-500" required>
+                    </div>
+                    <!-- Device Type -->
+                    <div>
+                        <label for="newDeviceType" class="block text-sm font-medium text-slate-400 mb-2">Device Type</label>
+                        <select id="newDeviceType" name="type" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 focus:ring-2 focus:ring-cyan-500" required>
+                            <option value="">Select type...</option>
+                            <option value="router">Router</option>
+                            <option value="switch">Switch</option>
+                            <option value="server">Server</option>
+                            <option value="firewall">Firewall</option>
+                            <option value="workstation">Workstation</option>
+                            <option value="access_point">Access Point</option>
+                            <option value="printer">Printer</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <!-- IP Address -->
+                    <div>
+                        <label for="newDeviceIp" class="block text-sm font-medium text-slate-400 mb-2">IP Address</label>
+                        <input type="text" id="newDeviceIp" name="ip_address" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 focus:ring-2 focus:ring-cyan-500" required>
+                    </div>
+                    <!-- Location -->
+                    <div>
+                        <label for="newDeviceLocation" class="block text-sm font-medium text-slate-400 mb-2">Location</label>
+                        <input type="text" id="newDeviceLocation" name="location" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 focus:ring-2 focus:ring-cyan-500" required>
+                    </div>
+                    <!-- Status -->
+                    <div class="md:col-span-2">
+                        <label for="newDeviceStatus" class="block text-sm font-medium text-slate-400 mb-2">Status</label>
+                        <select id="newDeviceStatus" name="status" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 focus:ring-2 focus:ring-cyan-500" required>
+                            <option value="">Select status...</option>
+                            <option value="online">Online</option>
+                            <option value="offline">Offline</option>
+                        </select>
+                    </div>
+                    <!-- Description -->
+                    <div class="md:col-span-2">
+                        <label for="newDeviceDescription" class="block text-sm font-medium text-slate-400 mb-2">Description</label>
+                        <textarea id="newDeviceDescription" name="description" rows="3" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 focus:ring-2 focus:ring-cyan-500"></textarea>
+                    </div>
                 </div>
             </form>
         </div>
 
-        <!-- Modal Footer -->
-        <div class="flex items-center justify-end gap-3 p-4 border-t border-slate-700">
+        <!-- Modal Footer (Remains fixed at the bottom) -->
+        <div class="flex-shrink-0 flex items-center justify-end gap-3 p-4 border-t border-slate-700">
             <button type="button" data-modal-close class="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white font-semibold rounded-lg transition-colors">Cancel</button>
-            <button type="button" onclick="addDevice()" class="px-4 py-2 bg-cyan-500 hover:bg-cyan-600 text-slate-900 font-semibold rounded-lg shadow-md transition-colors">Add Device</button>
+            <!-- Changed to type="submit" and linked to the form -->
+            <button type="submit" form="addDeviceForm" class="px-4 py-2 bg-cyan-500 hover:bg-cyan-600 text-slate-900 font-semibold rounded-lg shadow-md transition-colors">Add Device</button>
         </div>
     </div>
 </div>

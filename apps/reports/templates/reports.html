@@ -4,21 +4,47 @@
 {% block title %}Network Reports - INMS{% endblock %}
 
 {% block content %}
-<!-- Page Header -->
+<!-- Page Header with RESPONSIVE BUTTON -->
 <header class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
     <div class="flex items-center gap-3">
         <i class='bx bx-file text-3xl text-cyan-400'></i>
         <h1 class="text-2xl sm:text-3xl font-bold text-white">Network Reports</h1>
     </div>
-    <button type="button" data-modal-toggle="generateReportModal" class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-cyan-500 hover:bg-cyan-600 text-slate-900 font-semibold rounded-lg shadow-md transition-all duration-300">
+    <button type="button" data-modal-toggle="generateReportModal" class="inline-flex items-center justify-center gap-2 sm:px-4 py-2 px-3 bg-cyan-500 hover:bg-cyan-600 text-slate-900 font-semibold rounded-lg shadow-md transition-all duration-300">
         <i class='bx bx-plus-circle text-xl'></i>
-        <span>Generate New Report</span>
+        <span class="hidden sm:inline">Generate New Report</span>
     </button>
 </header>
 
-<!-- ... (Report Types Section can remain static) ... -->
+<!-- Report Types Section with HOVER EFFECTS -->
 <section class="grid grid-cols-1 gap-6 mb-8 md:grid-cols-3">
-    <!-- ... -->
+    <!-- Performance Reports Card -->
+    <div class="p-6 bg-slate-800 border border-slate-700 rounded-xl shadow-lg flex flex-col transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-xl hover:shadow-cyan-500/10">
+        <div class="flex items-center gap-3">
+            <i class='bx bx-line-chart text-xl text-cyan-400'></i>
+            <h5 class="font-semibold text-white">Performance Reports</h5>
+        </div>
+        <p class="mt-2 text-sm text-slate-400 flex-1">Network metrics, bandwidth usage, and latency analysis.</p>
+        <button class="mt-4 w-full px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white font-semibold rounded-lg transition-colors">Generate Report</button>
+    </div>
+    <!-- Security Reports Card -->
+    <div class="p-6 bg-slate-800 border border-slate-700 rounded-xl shadow-lg flex flex-col transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-xl hover:shadow-emerald-500/10">
+        <div class="flex items-center gap-3">
+            <i class='bx bx-shield-quarter text-xl text-emerald-400'></i>
+            <h5 class="font-semibold text-white">Security Reports</h5>
+        </div>
+        <p class="mt-2 text-sm text-slate-400 flex-1">Security incidents, threats detected, and compliance status.</p>
+        <button class="mt-4 w-full px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white font-semibold rounded-lg transition-colors">Generate Report</button>
+    </div>
+    <!-- Device Reports Card -->
+    <div class="p-6 bg-slate-800 border border-slate-700 rounded-xl shadow-lg flex flex-col transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-xl hover:shadow-sky-500/10">
+        <div class="flex items-center gap-3">
+            <i class='bx bx-devices text-xl text-sky-400'></i>
+            <h5 class="font-semibold text-white">Device Reports</h5>
+        </div>
+        <p class="mt-2 text-sm text-slate-400 flex-1">Device inventory, status, and configuration changes.</p>
+        <button class="mt-4 w-full px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white font-semibold rounded-lg transition-colors">Generate Report</button>
+    </div>
 </section>
 
 <!-- Recent Reports Table -->
@@ -39,8 +65,8 @@
                 </tr>
             </thead>
             <tbody>
-                {# Loop through recent reports from the database #}
-                {% for report in recent_reports %}
+                {# Loop through the PAGINATED recent reports #}
+                {% for report in page_obj %}
                 <tr class="border-t border-slate-700 hover:bg-slate-700/50">
                     <td class="px-6 py-4 font-medium text-white">{{ report.report_name }}</td>
                     <td class="px-6 py-4">{{ report.report_type }}</td>
@@ -55,7 +81,7 @@
                     <td class="px-6 py-4">
                         <div class="flex items-center justify-end gap-2">
                             <button class="p-2 rounded-md hover:bg-sky-500/20 text-sky-400" title="View"><i class='bx bx-show'></i></button>
-                            <button class="p-2 rounded-md hover:bg-green-500/20 text-green-400" title="Edit"><i class='bx bx-edit'></i></button>
+                            <button class="p-2 rounded-md hover:bg-amber-500/20 text-amber-400" title="Edit"><i class='bx bx-edit-alt'></i></button>
                             <button class="p-2 rounded-md hover:bg-slate-600 text-slate-300" title="Download"><i class='bx bx-download'></i></button>
                             <button class="p-2 rounded-md hover:bg-red-500/20 text-red-400" title="Delete"><i class='bx bx-trash'></i></button>
                         </div>
@@ -69,6 +95,42 @@
             </tbody>
         </table>
     </div>
+    <!-- DYNAMIC Pagination -->
+    {% if page_obj.has_other_pages %}
+    <div class="p-4 border-t border-slate-700">
+        <nav class="flex items-center justify-between sm:justify-end">
+            <div class="flex-1 sm:hidden">
+                 <p class="text-sm text-slate-500">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                </p>
+            </div>
+            <div class="flex items-center gap-1">
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}" class="px-3 py-1 rounded-md text-sm font-medium text-slate-300 hover:bg-slate-700">Previous</a>
+                {% else %}
+                    <span class="px-3 py-1 rounded-md text-sm font-medium text-slate-600 cursor-not-allowed">Previous</span>
+                {% endif %}
+                {% for i in page_obj.paginator.page_range %}
+                    {% if page_obj.number == i %}
+                        <span class="px-3 py-1 rounded-md text-sm font-medium bg-cyan-500/10 text-cyan-300">{{ i }}</span>
+                    {% else %}
+                        <a href="?page={{ i }}" class="px-3 py-1 rounded-md text-sm font-medium text-slate-300 hover:bg-slate-700">{{ i }}</a>
+                    {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}" class="px-3 py-1 rounded-md text-sm font-medium text-slate-300 hover:bg-slate-700">Next</a>
+                {% else %}
+                    <span class="px-3 py-1 rounded-md text-sm font-medium text-slate-600 cursor-not-allowed">Next</span>
+                {% endif %}
+            </div>
+        </nav>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Scheduled Reports Table -->
+<div class="bg-slate-800 border border-slate-700 rounded-xl shadow-lg">
+     <!-- ... (Table content from previous dynamic version) ... -->
 </div>
 
 {% include 'partials/reports/_generate_report_modal.html' %}

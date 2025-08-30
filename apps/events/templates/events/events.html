@@ -11,33 +11,51 @@
         <h1 class="text-2xl sm:text-3xl font-bold text-white">Network Events</h1>
     </div>
 
+    <!-- RESPONSIVE ACTION BUTTONS -->
     <div class="flex items-center gap-3">
-        <button type="button" data-modal-toggle="addEventModal" class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-cyan-500 hover:bg-cyan-600 text-slate-900 font-semibold rounded-lg shadow-md transition-colors">
+        <!-- Add New Event Button -->
+        <button type="button" data-modal-toggle="addEventModal" class="inline-flex items-center justify-center gap-2 sm:px-4 py-2 px-3 bg-cyan-500 hover:bg-cyan-600 text-slate-900 font-semibold rounded-lg shadow-md transition-colors">
             <i class='bx bx-plus-circle text-lg'></i>
-            <span>Add New Event</span>
+            <!-- Text is hidden on small screens -->
+            <span class="hidden sm:inline">Add New Event</span>
         </button>
-        <!-- ... other buttons ... -->
+
+        <!-- Filter Button -->
+        <button type="button" class="inline-flex items-center justify-center gap-2 sm:px-4 py-2 px-3 bg-slate-700 hover:bg-slate-600 text-white font-semibold rounded-lg shadow-md transition-colors">
+            <i class='bx bx-filter-alt text-lg'></i>
+            <span class="hidden sm:inline">Filter</span>
+        </button>
+        
+        <!-- Export Button -->
+        <button type="button" class="inline-flex items-center justify-center gap-2 sm:px-4 py-2 px-3 bg-slate-700 hover:bg-slate-600 text-white font-semibold rounded-lg shadow-md transition-colors">
+            <i class='bx bx-export text-lg'></i>
+            <span class="hidden sm:inline">Export</span>
+        </button>
     </div>
 </header>
 
-<!-- DYNAMIC Event Summary Cards -->
+<!-- DYNAMIC Event Summary Cards with HOVER EFFECTS -->
 <section class="grid grid-cols-1 gap-6 mb-8 sm:grid-cols-2 xl:grid-cols-4">
-    <div class="p-6 bg-slate-800 border border-slate-700 rounded-xl shadow-lg border-t-4 border-red-500">
+    <!-- Critical Events Card -->
+    <div class="p-6 bg-slate-800 border border-slate-700 rounded-xl shadow-lg border-t-4 border-red-500 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-xl hover:shadow-red-500/10">
         <h5 class="text-sm font-medium text-slate-400">Critical Events</h5>
         <h2 class="mt-1 text-4xl font-bold text-white">{{ critical_count }}</h2>
         <p class="mt-2 text-xs text-slate-500">Last 24 hours</p>
     </div>
-    <div class="p-6 bg-slate-800 border border-slate-700 rounded-xl shadow-lg border-t-4 border-amber-500">
+    <!-- Warning Events Card -->
+    <div class="p-6 bg-slate-800 border border-slate-700 rounded-xl shadow-lg border-t-4 border-amber-500 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-xl hover:shadow-amber-500/10">
         <h5 class="text-sm font-medium text-slate-400">Warning Events</h5>
         <h2 class="mt-1 text-4xl font-bold text-white">{{ warning_count }}</h2>
         <p class="mt-2 text-xs text-slate-500">Last 24 hours</p>
     </div>
-    <div class="p-6 bg-slate-800 border border-slate-700 rounded-xl shadow-lg border-t-4 border-orange-500">
+    <!-- Error Events Card -->
+    <div class="p-6 bg-slate-800 border border-slate-700 rounded-xl shadow-lg border-t-4 border-orange-500 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-xl hover:shadow-orange-500/10">
         <h5 class="text-sm font-medium text-slate-400">Error Events</h5>
         <h2 class="mt-1 text-4xl font-bold text-white">{{ error_count }}</h2>
         <p class="mt-2 text-xs text-slate-500">Last 24 hours</p>
     </div>
-    <div class="p-6 bg-slate-800 border border-slate-700 rounded-xl shadow-lg border-t-4 border-sky-500">
+    <!-- Info Events Card -->
+    <div class="p-6 bg-slate-800 border border-slate-700 rounded-xl shadow-lg border-t-4 border-sky-500 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-xl hover:shadow-sky-500/10">
         <h5 class="text-sm font-medium text-slate-400">Info Events</h5>
         <h2 class="mt-1 text-4xl font-bold text-white">{{ info_count }}</h2>
         <p class="mt-2 text-xs text-slate-500">Last 24 hours</p>

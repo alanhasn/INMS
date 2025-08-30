@@ -1,23 +1,23 @@
 {% load static %}
 <!-- ====================== -->
-<!-- STATISTICS CARDS       -->
+<!-- DYNAMIC STATISTICS CARDS -->
 <!-- ====================== -->
 <section class="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
     <!-- Total Devices Card -->
     <a href="{% url 'devices:devices' %}" class="block group">
         <div class="p-6 bg-slate-800 border border-slate-700 rounded-xl shadow-lg transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-cyan-500/10 border-t-4 border-cyan-500">
             <h5 class="text-sm font-medium text-slate-400">Total Devices</h5>
-            <h2 class="mt-1 text-4xl font-bold text-white" id="totalDevicesValue">24</h2>
-            <p class="mt-2 text-xs text-slate-500" id="devicesStatusText">Active: 20 | Inactive: 4</p>
+            <h2 class="mt-1 text-4xl font-bold text-white">{{ total_devices }}</h2>
+            <p class="mt-2 text-xs text-slate-500">Online: {{ online_devices }} | Offline: {{ offline_devices }}</p>
         </div>
     </a>
 
     <!-- Network Status Card -->
     <a href="{% url 'reports:reports' %}" class="block group">
         <div class="p-6 bg-slate-800 border border-slate-700 rounded-xl shadow-lg transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-emerald-500/10 border-t-4 border-emerald-500">
-            <h5 class="text-sm font-medium text-slate-400">Network Status</h5>
-            <h2 class="mt-1 text-4xl font-bold text-white" id="networkStatusValue">98.5%</h2>
-            <p class="mt-2 text-xs text-slate-500" id="networkStatusText">Uptime last 24h</p>
+            <h5 class="text-sm font-medium text-slate-400">Network Uptime</h5>
+            <h2 class="mt-1 text-4xl font-bold text-white">{{ network_uptime }}</h2>
+            <p class="mt-2 text-xs text-slate-500">In the last 24h</p>
         </div>
     </a>
 
@@ -25,8 +25,8 @@
     <a href="{% url 'events:events' %}" class="block group">
         <div class="p-6 bg-slate-800 border border-slate-700 rounded-xl shadow-lg transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-amber-500/10 border-t-4 border-amber-500">
             <h5 class="text-sm font-medium text-slate-400">Active Alerts</h5>
-            <h2 class="mt-1 text-4xl font-bold text-white" id="alertsCountValue">3</h2>
-            <p class="mt-2 text-xs text-slate-500" id="alertsStatusText">Critical: 1 | Warning: 2</p>
+            <h2 class="mt-1 text-4xl font-bold text-white">{{ active_alerts_total }}</h2>
+            <p class="mt-2 text-xs text-slate-500">Critical: {{ critical_alerts }} | Warning: {{ warning_alerts }}</p>
         </div>
     </a>
 
@@ -34,8 +34,8 @@
     <a href="{% url 'reports:reports' %}" class="block group">
         <div class="p-6 bg-slate-800 border border-slate-700 rounded-xl shadow-lg transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-sky-500/10 border-t-4 border-sky-500">
             <h5 class="text-sm font-medium text-slate-400">Bandwidth Usage</h5>
-            <h2 class="mt-1 text-4xl font-bold text-white" id="bandwidthValue">75%</h2>
-            <p class="mt-2 text-xs text-slate-500" id="bandwidthPeakText">Peak today: 82%</p>
+            <h2 class="mt-1 text-4xl font-bold text-white">{{ bandwidth_usage }}</h2>
+            <p class="mt-2 text-xs text-slate-500">Current network load</p>
         </div>
     </a>
 </section>

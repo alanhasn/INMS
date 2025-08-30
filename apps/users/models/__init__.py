@@ -1,1 +1,1 @@
-from .profile import Profile, Image_Validator
+from .profile import Profile, validate_image_file

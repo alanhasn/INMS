@@ -7,7 +7,10 @@ from django.contrib.auth.views import PasswordResetView
 from django.contrib import messages # Message framework
 from ..forms import CreateUserForm, AuthenticationUserForm, EditProfileForm # My Custom Form
 from ..models import Profile # My Custom Model
-from django.views import View
+from apps.devices.models import Device
+from apps.events.models import Event
+from django.utils import timezone
+from datetime import timedelta
 
 # ======== Main index view just redirect the User ========
 def index_redirect(request):
@@ -132,40 +135,82 @@ def ProfilePage(request):
 # ============Edit Profile============
 @login_required(login_url="login")
 def EditProfile(request):
-    profile, created = Profile.objects.get_or_create(user=request.user) 
-    
+    """
+    Display and process the EditProfileForm for the logged-in user.
+    Creates a Profile on first access if none exists.
+    """
+    # Ensure a Profile exists for this user
+    profile, created = Profile.objects.get_or_create(user=request.user)
     if created:
-        messages.info(request, "Profile created successfully. Please edit your profile to add more information.")
+        messages.info(
+            request,
+            "Profile created successfully. Please edit your profile to add more information."
+        )
 
     if request.method == "POST":
-        form = EditProfileForm(request.POST, request.FILES, instance=profile) # get the form data and instance of the profile
+        form = EditProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
+            # Update and save the profile
             profile = form.save(commit=False)
             profile.user = request.user
             profile.save()
-            messages.success(request, f"{request.user} Profile updated successfully.")
-            return redirect('profile')
+
+            messages.success(
+                request,
+                f"{request.user.username} profile updated successfully."
+            )
+            return redirect("profile")
+        else:
+            messages.error(request, "Please correct the errors below.")
     else:
-        form = EditProfileForm(instance=profile) # if its not valid form return empty form
-    # context data
-    context = {
-        "form":form
-    }
-    return render(request, "users/edit_profile.html", context)
+        form = EditProfileForm(instance=profile)
+
+    return render(request, "users/edit_profile.html", {"form": form})
 
 # ============Dashboard============
 @login_required(login_url="login")
 def DashboardPage(request):    
-    profile= Profile.objects.get(user=request.user) # Get the user profile
+    # Device counts
+    total_devices = Device.objects.count()
+    online_devices = Device.objects.filter(status='online').count()
+    offline_devices = total_devices - online_devices
+
+    # Active alerts (Critical and Warning events from the last 24 hours)
+    twenty_four_hours_ago = timezone.now() - timedelta(days=1)
+    critical_alerts = Event.objects.filter(
+        severity=Event.SavertyChoices.CRITICAL,
+        event_date__gte=twenty_four_hours_ago
+    ).count()
+    warning_alerts = Event.objects.filter(
+        severity=Event.SavertyChoices.WARNING,
+        event_date__gte=twenty_four_hours_ago
+    ).count()
+    active_alerts_total = critical_alerts + warning_alerts
+
+    # Placeholder data for complex metrics
+    network_uptime = "99.8%" # This is typically calculated by a separate monitoring service
+    bandwidth_usage = "68%"   # This is also from a monitoring service
+
+    # --- 2. Data for the Recent Events Table ---
+    # Get the 5 most recent events, prefetching the related device to avoid extra queries
+    recent_events = Event.objects.select_related('device').all()[:5]
 
     context = {
-        "profile": profile, # -> User Profile Info
-        'active_page': 'dashboard'      # <-- to highlight the sidebar link
-
+        'active_page': 'dashboard',
+        # Stats card data
+        'total_devices': total_devices,
+        'online_devices': online_devices,
+        'offline_devices': offline_devices,
+        'network_uptime': network_uptime,
+        'active_alerts_total': active_alerts_total,
+        'critical_alerts': critical_alerts,
+        'warning_alerts': warning_alerts,
+        'bandwidth_usage': bandwidth_usage,
+        # Recent events table data
+        'recent_events': recent_events,
     }
-    return render(request, "users/dashboard.html" , context)
+    return render(request, "users/dashboard.html", context)
 
-    
 # ============404 Page=============
 def PageNotFound(request, exception):
     """
@@ -174,3 +219,4 @@ def PageNotFound(request, exception):
     It renders a custom 404 error page.
     """
     return render(request, "users/404.html", status=404)
+
