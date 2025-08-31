@@ -4,12 +4,8 @@ from django.urls import path
 #     UserProfileUpdateAPIView,
 #     UserInfoAPIView,
 # )
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
-    TokenVerifyView,
-
-)
+from rest_framework_simplejwt.views import (TokenObtainPairView,
+                                            TokenRefreshView, TokenVerifyView)
 
 # This file contains API URLs for user management, including JWT authentication and user profile handling.
 # Not all URLs are currently implemented, but the structure is set up for future development.

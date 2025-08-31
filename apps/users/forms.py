@@ -1,13 +1,14 @@
 # ===========Importing Required Libraries and Modules=========================
-from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm , AuthenticationForm # built in userCreation form
-from django import forms 
 from django import forms
+from django.contrib.auth.forms import (  # built in userCreation form
+    AuthenticationForm, UserCreationForm)
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-from django.core.files.uploadedfile import (
-    InMemoryUploadedFile, TemporaryUploadedFile
-)
+from django.core.files.uploadedfile import (InMemoryUploadedFile,
+                                            TemporaryUploadedFile)
+
 from .models import Profile
+
 # ------------------------------------------------------------------------------
 
 # This form is used to create a new user.

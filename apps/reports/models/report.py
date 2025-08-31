@@ -1,6 +1,8 @@
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
+
 from apps.devices.models import Device
+
 # Create your models here.
 
 class Report(models.Model):

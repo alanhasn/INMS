@@ -1,17 +1,12 @@
-from django.shortcuts import render
-from ..forms import DeviceForm
-from ...users.models import Profile
-from apps.devices.models import Device
 from django.core.paginator import Paginator  # <-- IMPORT THE PAGINATOR
 from django.shortcuts import render
-from django.utils import timezone
-from datetime import timedelta
 
 # Import the necessary models
 from apps.devices.models import Device
 from apps.events.models import Event
-from django.shortcuts import render
-from django.core.paginator import Paginator  # <-- IMPORT THE PAGINATOR
+
+from ...users.models import Profile
+from ..forms import DeviceForm
 
 
 def test(request):

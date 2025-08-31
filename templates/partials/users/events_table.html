@@ -28,7 +28,7 @@
                 <tr class="border-b border-slate-700 hover:bg-slate-700/50 last:border-b-0">
                     <td class="px-6 py-4 text-slate-400 whitespace-nowrap">{{ event.event_date|date:"H:i" }}</td>
                     <td class="px-6 py-4">
-                        <a href="" class="text-cyan-400 hover:underline font-medium">{{ event.device.name }}</a>
+                        <a href="" class="text-cyan-400 hover:underline font-medium">{{ event.device.device_name }}</a>
                     </td>
                     <td class="px-6 py-4">
                         <a href="" class="hover:underline">{{ event.event_description|truncatewords:10 }}</a>

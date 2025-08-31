@@ -1,11 +1,12 @@
-from rest_framework import generics
-from rest_framework.permissions import IsAuthenticated , IsAdminUser
-from rest_framework_simplejwt.views import TokenObtainPairView
-from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.contrib.auth.models import User
+from rest_framework import generics
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework_simplejwt.views import TokenObtainPairView
+
+from ..models.profile import Profile
 # from ..serializers.profile_serializer import UserProfileSerializer
 from ..serializers.user_serializer import UserSerializer
-from ..models.profile import Profile
 
 # This file contains API views for user management, including JWT authentication and user profile handling.
 # Not all views are currently implemented, but the structure is set up for future development.

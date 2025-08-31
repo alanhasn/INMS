@@ -79,34 +79,35 @@
             </thead>
             <tbody>
                 {% for event in events %}
-                <tr class="border-t border-slate-700 hover:bg-slate-700/50">
-                    <td class="px-6 py-4 whitespace-nowrap">{{ event.event_date|date:"Y-m-d H:i" }}</td>
-                    <td class="px-6 py-4 font-mono text-slate-400">EVT-{{ event.id }}</td>
-                    <td class="px-6 py-4 font-medium text-white">{{ event.device.name }}</td>
-                    <td class="px-6 py-4">{{ event.event_description|truncatewords:12 }}</td>
-                    <td class="px-6 py-4">
-                        <span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold
-                            {% if event.severity == 'Critical' %} bg-red-500/10 text-red-400
-                            {% elif event.severity == 'Error' %} bg-orange-500/10 text-orange-400
-                            {% elif event.severity == 'Warning' %} bg-amber-500/10 text-amber-400
-                            {% else %} bg-sky-500/10 text-sky-400 {% endif %}">
-                            {{ event.get_severity_display }}
-                        </span>
-                    </td>
-                    <td class="px-6 py-4 text-slate-400">Active</td>
-                    <td class="px-6 py-4">
-                        <div class="flex items-center justify-end gap-2">
-                            <button class="p-2 rounded-md hover:bg-sky-500/20 text-sky-400 transition-colors" title="View Details"><i class='bx bx-show'></i></button>
-                            <button class="p-2 rounded-md hover:bg-emerald-500/20 text-emerald-400 transition-colors" title="Mark Resolved"><i class='bx bx-check'></i></button>
-                        </div>
-                    </td>
-                </tr>
-                {% empty %}
-                <tr class="border-t border-slate-700">
-                    <td colspan="7" class="text-center py-8 px-6 text-slate-500">
-                        <p>No events found in the system.</p>
-                    </td>
-                </tr>
+                    <tr class="border-t border-slate-700 hover:bg-slate-700/50">
+                        <td class="px-6 py-4 whitespace-nowrap">{{ event.event_date|date:"Y-m-d H:i" }}</td>
+                        <td class="px-6 py-4 font-mono text-slate-400">EVT-{{ event.id }}</td>
+                        <td class="px-6 py-4 font-medium text-white">{{ event.device.device_name }}</td>
+                        <td class="px-6 py-4">{{ event.event_description|truncatewords:12 }}</td>
+                        <td class="px-6 py-4">
+                            <span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold
+                                {% if event.severity == 'Critical' %} bg-red-500/10 text-red-400
+                                {% elif event.severity == 'Error' %} bg-orange-500/10 text-orange-400
+                                {% elif event.severity == 'Warning' %} bg-amber-500/10 text-amber-400
+                                {% elif event.severity == 'Info' %} bg-cyan-500/10 text-cyan-400
+                                {% else %} bg-sky-500/10 text-sky-400 {% endif %}">
+                                {{ event.get_severity_display }}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 text-slate-400">Active</td>
+                        <td class="px-6 py-4">
+                            <div class="flex items-center justify-end gap-2">
+                                <button class="p-2 rounded-md hover:bg-sky-500/20 text-sky-400 transition-colors" title="View Details"><i class='bx bx-show'></i></button>
+                                <button class="p-2 rounded-md hover:bg-emerald-500/20 text-emerald-400 transition-colors" title="Mark Resolved"><i class='bx bx-check'></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr class="border-t border-slate-700">
+                        <td colspan="7" class="text-center py-8 px-6 text-slate-500">
+                            <p>No events found in the system.</p>
+                        </td>
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>
@@ -115,11 +116,25 @@
     <!-- Pagination -->
     <div class="p-4 border-t border-slate-700">
         <nav class="flex items-center justify-end">
-            <a href="#" class="px-3 py-1 rounded-md text-sm font-medium text-slate-500 pointer-events-none">Previous</a>
-            <a href="#" class="px-3 py-1 rounded-md text-sm font-medium bg-cyan-500/10 text-cyan-300">1</a>
-            <a href="#" class="px-3 py-1 rounded-md text-sm font-medium text-slate-300 hover:bg-slate-700">2</a>
-            <a href="#" class="px-3 py-1 rounded-md text-sm font-medium text-slate-300 hover:bg-slate-700">3</a>
-            <a href="#" class="px-3 py-1 rounded-md text-sm font-medium text-slate-300 hover:bg-slate-700">Next</a>
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}" class="px-3 py-1 rounded-md text-sm font-medium text-slate-300 hover:bg-slate-700">Previous</a>
+            {% else %}
+                <span class="px-3 py-1 rounded-md text-sm font-medium text-slate-500 pointer-events-none">Previous</span>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+                {% if num == page_obj.number %}
+                    <span class="px-3 py-1 rounded-md text-sm font-medium bg-cyan-500/10 text-cyan-300">{{ num }}</span>
+                {% else %}
+                    <a href="?page={{ num }}" class="px-3 py-1 rounded-md text-sm font-medium text-slate-300 hover:bg-slate-700">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" class="px-3 py-1 rounded-md text-sm font-medium text-slate-300 hover:bg-slate-700">Next</a>
+            {% else %}
+                <span class="px-3 py-1 rounded-md text-sm font-medium text-slate-500 pointer-events-none">Next</span>
+            {% endif %}
         </nav>
     </div>
 </div>

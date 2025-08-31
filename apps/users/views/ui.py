@@ -1,16 +1,21 @@
 # ===================Imports===================
-from django.shortcuts import render, redirect
-from django.contrib.auth import logout, authenticate, login 
+from datetime import timedelta
+
+from django.contrib import messages  # Message framework
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.views import PasswordResetView
-from django.contrib import messages # Message framework
-from ..forms import CreateUserForm, AuthenticationUserForm, EditProfileForm # My Custom Form
-from ..models import Profile # My Custom Model
+from django.shortcuts import redirect, render
+from django.utils import timezone
+
 from apps.devices.models import Device
 from apps.events.models import Event
-from django.utils import timezone
-from datetime import timedelta
+
+from ..forms import (AuthenticationUserForm, CreateUserForm,  # My Custom Form
+                     EditProfileForm)
+from ..models import Profile  # My Custom Model
+
 
 # ======== Main index view just redirect the User ========
 def index_redirect(request):

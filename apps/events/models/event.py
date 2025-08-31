@@ -1,5 +1,7 @@
 from django.db import models
+
 from apps.devices.models import Device
+
 
 class Event(models.Model):
     event_type = models.CharField(max_length=100, verbose_name="Event Type")
@@ -19,3 +21,6 @@ class Event(models.Model):
         verbose_name = "Event"
         verbose_name_plural = "Events"
         ordering = ['-event_date']
+
+    def __str__(self):
+        return f"{self.event_type} - {self.device.device_name} - {self.event_date.strftime('%Y-%m-%d %H:%M:%S')}"

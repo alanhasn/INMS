@@ -2,30 +2,6 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 class UserSerializer(serializers.ModelSerializer):
     """
         Serializer for User model that includes profile information.

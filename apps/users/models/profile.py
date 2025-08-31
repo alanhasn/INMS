@@ -1,9 +1,11 @@
-from django.db import models
-from django.contrib.auth.models import User
-from django.core.validators import FileExtensionValidator
-from django.core.exceptions import ValidationError
-from PIL import Image
 import os
+
+from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+from django.core.validators import FileExtensionValidator
+from django.db import models
+from PIL import Image
+
 
 def validate_image_file(image):
     """

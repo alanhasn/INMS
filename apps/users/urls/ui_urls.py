@@ -1,7 +1,9 @@
 # ===========Importing Required Libraries and Modules=========================
-from django.urls import path
 import django.contrib.auth.views as auth
+from django.urls import path
+
 from ..views import ui
+
 # ---------------------------------------------------------------------------
 
 urlpatterns = [

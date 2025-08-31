@@ -1,5 +1,7 @@
 from django.contrib import admin
+
 from .models.report import Report
+
 # Register your models here.
 
 @admin.register(Report)

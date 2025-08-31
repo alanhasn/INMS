@@ -1,24 +1,8 @@
+from django.contrib.auth.models import User
 from rest_framework import serializers
+
 from ..models.profile import Profile
 from ..serializers.user_serializer import UserSerializer
-from rest_framework import serializers
-from django.contrib.auth.models import User
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 # class UserProfileSerializer(serializers.ModelSerializer):
 #     """
@@ -42,4 +26,3 @@ from django.contrib.auth.models import User
 #             "country",
 #             "created_at",
 #         ]
-

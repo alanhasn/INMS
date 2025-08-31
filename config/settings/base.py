@@ -7,11 +7,12 @@ now we can import apps from the 'apps' directory just if we type the name of the
 without the need to specify the full path
 '''
 
-import sys
-from pathlib import Path
-from decouple import config
-from datetime import timedelta
 import os
+import sys
+from datetime import timedelta
+from pathlib import Path
+
+from decouple import config
 
 # ----------------------------------------------------------------------------------
 BASE_DIR = Path(__file__).resolve().parent.parent.parent  # This is the base directory of the project

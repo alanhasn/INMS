@@ -66,7 +66,7 @@
             </thead>
             <tbody>
                 {# Loop through the PAGINATED recent reports #}
-                {% for report in page_obj %}
+                {% for report in reports %}
                 <tr class="border-t border-slate-700 hover:bg-slate-700/50">
                     <td class="px-6 py-4 font-medium text-white">{{ report.report_name }}</td>
                     <td class="px-6 py-4">{{ report.report_type }}</td>
