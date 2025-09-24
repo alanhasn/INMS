@@ -1,5 +1,5 @@
 from django.contrib import admin
-
+from .models import CustomUser
 from .models import Profile
 
 
@@ -14,4 +14,15 @@ class UserProfileAdmin(admin.ModelAdmin):
     ordering = ("-created_at",)
     list_per_page = 20 # Number of records per page in the admin list view
     list_display_links = ("user__username", "first_name", "last_name")
-    
+
+@admin.register(CustomUser)
+class CustomUserAdmin(admin.ModelAdmin):
+    """
+    Admin interface for the CustomUser model.
+    """
+    list_display = ("username", "email", "first_name", "last_name", "role", "is_staff", "is_active")
+    search_fields = ("username", "email", "first_name", "last_name")
+    list_filter = ("role", "is_staff", "is_active")
+    ordering = ("-date_joined",)
+    list_per_page = 20 # Number of records per page in the admin list view
+    list_display_links = ("username", "email")

@@ -42,6 +42,13 @@ Steps:
 8. Run the development server:
    python manage.py runserver
 
+## Database notes
+
+- Local development uses SQLite by default (no separate DB server required).
+   The `inms/settings/dev.py` file overrides `DATABASES` to point at `db.sqlite3` in the project root.
+- Production is expected to use PostgreSQL. Configure the connection with the environment variables `DB_NAME`, `DB_USER`, `DB_PASSWORD`, `DB_HOST`, and `DB_PORT` (these are read in `inms/settings/prod.py`).
+
+
 ## Usage
 - Access the application at http://localhost:8000
 - Use the admin panel at http://localhost:8000/admin

@@ -1,5 +1,6 @@
-from django.contrib.auth.models import User
 from django.db import models
+from django.conf import settings
+
 
 
 class Device(models.Model):
@@ -27,7 +28,7 @@ class Device(models.Model):
         WARNING = "Warning"
 
     status = models.CharField(max_length=20 ,choices=StatusChoices.choices, default=StatusChoices.ACTIVE , verbose_name="Status")
-    owner = models.ForeignKey(User , on_delete=models.CASCADE , verbose_name="Device Owner" , related_name="owned_devices")
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete=models.CASCADE , verbose_name="Device Owner" , related_name="owned_devices")
 
     class Meta:
         verbose_name = "Device"

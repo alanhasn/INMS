@@ -45,7 +45,7 @@
                         
                         {# This loop requires a 'devices' variable from your view #}
                         {% for device in devices %}
-                            <option value="{{ device.id }}">{{ device.name }} ({{ device.ip }})</option>
+                            <option value="{{ device.id }}">{{ device.device_name }}-{{ device.device_type }} ({{ device.ip_address }})</option>
                         {% endfor %}
                     </select>
                 </div>

@@ -192,9 +192,19 @@ def DashboardPage(request):
     ).count()
     active_alerts_total = critical_alerts + warning_alerts
 
-    # Placeholder data for complex metrics
-    network_uptime = "99.8%" # This is typically calculated by a separate monitoring service
-    bandwidth_usage = "68%"   # This is also from a monitoring service
+    # Monitoring service functions
+    def get_network_uptime():
+        # Example calculation: In production, replace this with actual monitoring logic.
+        # For example, ping devices or aggregate data from various monitoring tools.
+    
+        return "99.8%"  # This is a placeholder value.
+
+    def get_bandwidth_usage():
+        # Example calculation: In production, query your bandwidth monitoring system or SNMP data.
+        return "68%"    # This is a placeholder value.
+
+    network_uptime = get_network_uptime()
+    bandwidth_usage = get_bandwidth_usage()
 
     # --- 2. Data for the Recent Events Table ---
     # Get the 5 most recent events, prefetching the related device to avoid extra queries
@@ -224,4 +234,3 @@ def PageNotFound(request, exception):
     It renders a custom 404 error page.
     """
     return render(request, "users/404.html", status=404)
-

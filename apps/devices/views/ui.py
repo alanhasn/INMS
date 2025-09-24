@@ -24,6 +24,7 @@ def test(request):
     
     context = {
         'active_page': 'devices',
+        'devices': device_list,
         'page_obj': page_obj,  # <-- PASS THE PAGE OBJECT to the template
     }
     return render(request, 'devices/devices.html', context) 

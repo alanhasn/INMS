@@ -23,7 +23,7 @@ Organizations managing internal IT infrastructure need tools to track devices, m
 * Device management (CRUD operations for network devices).
 * Event logging (system events, user actions, device status changes).
 * Basic reports and dashboards.
-* Simple web interface with Django Templates (Bootstrap).
+* Simple web interface with Django Templates (Tailwind).
 
 **Out of Scope (for MVP):**
 
@@ -79,34 +79,34 @@ Organizations managing internal IT infrastructure need tools to track devices, m
 
 1. **User Management**
 
-   * Create, edit, and delete users.
-   * Assign roles: Admin, Manager, Employee.
-   * Enforce role-based permissions.
+    * Create, edit, and delete users.
+    * Assign roles: Admin, Manager, Employee.
+    * Enforce role-based permissions.
 
 2. **Device Management**
 
-   * CRUD operations for devices.
-   * Fields: IP Address, MAC Address, Hostname, Device Type, Status.
-   * Link devices to users (optional for MVP).
+    * CRUD operations for devices.
+    * Fields: IP Address, MAC Address, Hostname, Device Type, Status.
+    * Link devices to users (optional for MVP).
 
 3. **Event Logging**
 
-   * Log user actions (login, logout, failed login).
-   * Log device actions (creation, update, deletion).
-   * Store event type, user, device, timestamp.
+    * Log user actions (login, logout, failed login).
+    * Log device actions (creation, update, deletion).
+    * Store event type, user, device, timestamp.
 
 4. **Reports**
 
-   * Generate device summary (active vs inactive).
-   * Generate event summary (logins, errors, device changes).
-   * Export reports to CSV (PDF optional for later).
+    * Generate device summary (active vs inactive).
+    * Generate event summary (logins, errors, device changes).
+    * Export reports to CSV (PDF optional for later).
 
 ### 4.2 Supporting Features
 
 * Dashboard displaying:
 
-  * Number of users, devices, and events.
-  * Recent activity log.
+    * Number of users, devices, and events.
+    * Recent activity log.
 * Simple search and filters for devices and events.
 
 ---
@@ -126,7 +126,7 @@ Organizations managing internal IT infrastructure need tools to track devices, m
 
 ### 5.3 Usability
 
-* Simple, responsive UI (Bootstrap + Django Templates).
+* Simple, responsive UI (Tailwind + Django Templates).
 * Accessible on desktop browsers.
 
 ### 5.4 Compatibility
@@ -142,16 +142,16 @@ Organizations managing internal IT infrastructure need tools to track devices, m
 
 * **MVC (Django CBVs)** structure with modular apps:
 
-  * `users/`
-  * `devices/`
-  * `events/`
-  * `reports/`
+    * `users/`
+    * `devices/`
+    * `events/`
+    * `reports/`
 
 ### 6.2 Technology Stack
 
-* **Frontend:** Django Templates + Bootstrap.
+* **Frontend:** Django Templates + Tailwind.
 * **Backend:** Django (Python).
-* **Database:** PostgreSQL.
+* **Database:** PostgreSQL for production.
 * **Other:** Django Admin for quick management.
 
 ### 6.3 Data Requirements
@@ -185,10 +185,10 @@ Organizations managing internal IT infrastructure need tools to track devices, m
 
 * **Risk 1:** Scope creep by adding too many advanced features early.
 
-  * *Mitigation:* Stick to MVP core features only.
+    * *Mitigation:* Stick to MVP core features only.
 * **Risk 2:** Performance issues with large datasets.
 
-  * *Mitigation:* Optimize queries and add indexes.
+    * *Mitigation:* Optimize queries and add indexes.
 
 ### 8.2 Assumptions
 

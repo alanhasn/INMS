@@ -1,6 +1,7 @@
 import os
 
 from django.contrib.auth.models import User
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.validators import FileExtensionValidator
 from django.db import models
@@ -28,7 +29,7 @@ def validate_image_file(image):
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     
     profile_image = models.ImageField(
         upload_to="profile_images/",
