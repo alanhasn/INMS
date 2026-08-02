@@ -62,6 +62,12 @@
                         {{ form.mac_address }}
                         {% for error in form.mac_address.errors %}<p class="text-red-400 text-xs mt-1">{{ error }}</p>{% endfor %}
                     </div>
+                    <!-- Port -->
+                    <div>
+                        <label for="{{ form.port.id_for_label }}" class="block text-sm font-medium text-slate-400 mb-2">Port</label>
+                        {{ form.port }}
+                        {% for error in form.port.errors %}<p class="text-red-400 text-xs mt-1">{{ error }}</p>{% endfor %}
+                    </div>
                     <!-- Location -->
                     <div>
                         <label for="{{ form.location.id_for_label }}" class="block text-sm font-medium text-slate-400 mb-2">Location</label>
