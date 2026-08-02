@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Edit Device - INMS{% endblock %}
+
+{% block content %}
+<header class="flex items-center gap-3 mb-8">
+    <i class='bx bx-edit-alt text-3xl text-cyan-400'></i>
+    <h1 class="text-2xl sm:text-3xl font-bold text-white">Edit Device: {{ device.device_name }}</h1>
+</header>
+
+<div class="bg-slate-800 border border-slate-700 rounded-xl shadow-lg p-6 max-w-3xl">
+    <form method="POST">
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+        <div class="mb-4 p-3 bg-red-900/50 border border-red-700 rounded-lg text-red-300 text-sm">
+            {% for error in form.non_field_errors %}<p>{{ error }}</p>{% endfor %}
+        </div>
+        {% endif %}
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+            <div>
+                <label for="{{ form.device_name.id_for_label }}" class="block text-sm font-medium text-slate-400 mb-2">Device Name</label>
+                {{ form.device_name }}
+                {% for error in form.device_name.errors %}<p class="text-red-400 text-xs mt-1">{{ error }}</p>{% endfor %}
+            </div>
+            <div>
+                <label for="{{ form.device_type.id_for_label }}" class="block text-sm font-medium text-slate-400 mb-2">Device Type</label>
+                {{ form.device_type }}
+                {% for error in form.device_type.errors %}<p class="text-red-400 text-xs mt-1">{{ error }}</p>{% endfor %}
+            </div>
+            <div>
+                <label for="{{ form.ip_address.id_for_label }}" class="block text-sm font-medium text-slate-400 mb-2">IP Address</label>
+                {{ form.ip_address }}
+                {% for error in form.ip_address.errors %}<p class="text-red-400 text-xs mt-1">{{ error }}</p>{% endfor %}
+            </div>
+            <div>
+                <label for="{{ form.mac_address.id_for_label }}" class="block text-sm font-medium text-slate-400 mb-2">MAC Address</label>
+                {{ form.mac_address }}
+                {% for error in form.mac_address.errors %}<p class="text-red-400 text-xs mt-1">{{ error }}</p>{% endfor %}
+            </div>
+            <div>
+                <label for="{{ form.port.id_for_label }}" class="block text-sm font-medium text-slate-400 mb-2">Port</label>
+                {{ form.port }}
+                {% for error in form.port.errors %}<p class="text-red-400 text-xs mt-1">{{ error }}</p>{% endfor %}
+            </div>
+            <div>
+                <label for="{{ form.location.id_for_label }}" class="block text-sm font-medium text-slate-400 mb-2">Location</label>
+                {{ form.location }}
+                {% for error in form.location.errors %}<p class="text-red-400 text-xs mt-1">{{ error }}</p>{% endfor %}
+            </div>
+            <div>
+                <label for="{{ form.status.id_for_label }}" class="block text-sm font-medium text-slate-400 mb-2">Status</label>
+                {{ form.status }}
+                {% for error in form.status.errors %}<p class="text-red-400 text-xs mt-1">{{ error }}</p>{% endfor %}
+            </div>
+            <div class="md:col-span-2">
+                <label for="{{ form.owner.id_for_label }}" class="block text-sm font-medium text-slate-400 mb-2">Assign To</label>
+                {{ form.owner }}
+                {% for error in form.owner.errors %}<p class="text-red-400 text-xs mt-1">{{ error }}</p>{% endfor %}
+            </div>
+            <div class="md:col-span-2">
+                <label for="{{ form.description.id_for_label }}" class="block text-sm font-medium text-slate-400 mb-2">Description</label>
+                {{ form.description }}
+                {% for error in form.description.errors %}<p class="text-red-400 text-xs mt-1">{{ error }}</p>{% endfor %}
+            </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 pt-6">
+            <button type="submit" class="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-cyan-500 hover:bg-cyan-600 text-slate-900 font-bold rounded-lg shadow-lg transition-colors">
+                <i class='bx bx-save'></i> Save Changes
+            </button>
+            <a href="{% url 'devices:devices' %}" class="w-full sm:w-auto text-center flex items-center justify-center gap-2 px-6 py-3 bg-slate-700 hover:bg-slate-600 text-slate-200 font-bold rounded-lg shadow-lg transition-colors">
+                <i class='bx bx-arrow-back'></i> Cancel
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}

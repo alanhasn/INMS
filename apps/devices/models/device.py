@@ -1,3 +1,4 @@
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.conf import settings
 
@@ -17,6 +18,12 @@ class Device(models.Model):
     device_type = models.CharField(max_length=100 ,choices=DeviceTypeChoices.choices, verbose_name="Device Type")
     ip_address = models.GenericIPAddressField(verbose_name="IP Address")
     mac_address = models.CharField(max_length=17 , verbose_name="MAC Address")
+    port = models.PositiveIntegerField(
+        blank=True, null=True,
+        validators=[MinValueValidator(1), MaxValueValidator(65535)],
+        verbose_name="Port",
+        help_text="Management/service port (1-65535), if applicable.",
+    )
     location = models.CharField(max_length=100 , verbose_name="Location")
     description = models.TextField(blank=True , null=True , verbose_name="Description")
     class StatusChoices(models.TextChoices):

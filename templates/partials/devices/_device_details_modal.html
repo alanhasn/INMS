@@ -1,4 +1,4 @@
-<!-- Device Details Modal Placeholder -->
+<!-- Device Details Modal -->
 <div id="deviceDetailsModal" class="modal-container hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
     <div class="w-full max-w-lg bg-slate-800 border border-slate-700 rounded-xl shadow-2xl">
         <!-- Modal Header -->
@@ -11,9 +11,44 @@
             </button>
         </div>
 
-        <!-- Modal Body (TODO: Populate with device details) -->
-        <div class="p-6">
-            <p class="text-slate-400">Device details will be displayed here.</p>
+        <!-- Modal Body -->
+        <div class="p-6 grid grid-cols-2 gap-4 text-sm">
+            <div>
+                <p class="text-slate-400">Device Name</p>
+                <p id="detailDeviceName" class="text-white font-medium mt-0.5"></p>
+            </div>
+            <div>
+                <p class="text-slate-400">Type</p>
+                <p id="detailDeviceType" class="text-white font-medium mt-0.5"></p>
+            </div>
+            <div>
+                <p class="text-slate-400">IP Address</p>
+                <p id="detailDeviceIp" class="text-white font-mono mt-0.5"></p>
+            </div>
+            <div>
+                <p class="text-slate-400">MAC Address</p>
+                <p id="detailDeviceMac" class="text-white font-mono mt-0.5"></p>
+            </div>
+            <div>
+                <p class="text-slate-400">Port</p>
+                <p id="detailDevicePort" class="text-white font-mono mt-0.5"></p>
+            </div>
+            <div>
+                <p class="text-slate-400">Status</p>
+                <p id="detailDeviceStatus" class="text-white font-medium mt-0.5"></p>
+            </div>
+            <div>
+                <p class="text-slate-400">Location</p>
+                <p id="detailDeviceLocation" class="text-white font-medium mt-0.5"></p>
+            </div>
+            <div>
+                <p class="text-slate-400">Owner</p>
+                <p id="detailDeviceOwner" class="text-white font-medium mt-0.5"></p>
+            </div>
+            <div class="col-span-2">
+                <p class="text-slate-400">Description</p>
+                <p id="detailDeviceDescription" class="text-slate-300 mt-0.5"></p>
+            </div>
         </div>
 
         <!-- Modal Footer -->

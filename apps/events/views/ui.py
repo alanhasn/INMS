@@ -7,7 +7,11 @@ from django.utils import timezone
 from apps.devices.models import Device
 from apps.events.models import Event
 
+from apps.users.models import CustomUser
+from apps.users.permissions.user_permissions import role_required
 
+
+@role_required(CustomUser.Roles.ADMIN, CustomUser.Roles.Manager)
 def test(request):
     # --- 1. Data for Summary Cards (last 24 hours) ---
     twenty_four_hours_ago = timezone.now() - timedelta(days=1)
@@ -33,8 +37,6 @@ def test(request):
     # --- 3. Data for the 'Add Event' Modal ---
     all_devices = Device.objects.all()
 
-    all_events = Event.objects.all()
-
     context = {
         'active_page': 'events',
         'critical_count': critical_count,
@@ -43,6 +45,5 @@ def test(request):
         'info_count': info_count,
         'page_obj': page_obj,  # <-- PASS THE PAGE OBJECT, NOT THE FULL LIST
         'devices': all_devices,
-        'events': all_events,
     }
     return render(request, 'events/events.html', context)

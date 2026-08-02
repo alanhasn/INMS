@@ -29,58 +29,68 @@
             - overflow-y-auto: The content inside this div will scroll, not the whole modal.
         -->
         <div class="p-6 flex-1 overflow-y-auto">
-            <!-- Added method, action, and removed grid layout from form tag -->
-            <form id="addDeviceForm" method="POST">
+            <form id="addDeviceForm" method="POST" action="{% url 'devices:device_create' %}">
                 {% csrf_token %}
+                {% if form.non_field_errors %}
+                <div class="mb-4 p-3 bg-red-900/50 border border-red-700 rounded-lg text-red-300 text-sm">
+                    {% for error in form.non_field_errors %}<p>{{ error }}</p>{% endfor %}
+                </div>
+                {% endif %}
                 <!-- The responsive grid is now on a wrapper div -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
                     <!-- Device Name -->
                     <div>
-                        <label for="newDeviceName" class="block text-sm font-medium text-slate-400 mb-2">Device Name</label>
-                        <input type="text" id="newDeviceName" name="name" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 focus:ring-2 focus:ring-cyan-500" required>
+                        <label for="{{ form.device_name.id_for_label }}" class="block text-sm font-medium text-slate-400 mb-2">Device Name</label>
+                        {{ form.device_name }}
+                        {% for error in form.device_name.errors %}<p class="text-red-400 text-xs mt-1">{{ error }}</p>{% endfor %}
                     </div>
                     <!-- Device Type -->
                     <div>
-                        <label for="newDeviceType" class="block text-sm font-medium text-slate-400 mb-2">Device Type</label>
-                        <select id="newDeviceType" name="type" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 focus:ring-2 focus:ring-cyan-500" required>
-                            <option value="">Select type...</option>
-                            <option value="router">Router</option>
-                            <option value="switch">Switch</option>
-                            <option value="server">Server</option>
-                            <option value="firewall">Firewall</option>
-                            <option value="workstation">Workstation</option>
-                            <option value="access_point">Access Point</option>
-                            <option value="printer">Printer</option>
-                            <option value="other">Other</option>
-                        </select>
+                        <label for="{{ form.device_type.id_for_label }}" class="block text-sm font-medium text-slate-400 mb-2">Device Type</label>
+                        {{ form.device_type }}
+                        {% for error in form.device_type.errors %}<p class="text-red-400 text-xs mt-1">{{ error }}</p>{% endfor %}
                     </div>
                     <!-- IP Address -->
                     <div>
-                        <label for="newDeviceIp" class="block text-sm font-medium text-slate-400 mb-2">IP Address</label>
-                        <input type="text" id="newDeviceIp" name="ip_address" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 focus:ring-2 focus:ring-cyan-500" required>
+                        <label for="{{ form.ip_address.id_for_label }}" class="block text-sm font-medium text-slate-400 mb-2">IP Address</label>
+                        {{ form.ip_address }}
+                        {% for error in form.ip_address.errors %}<p class="text-red-400 text-xs mt-1">{{ error }}</p>{% endfor %}
+                    </div>
+                    <!-- MAC Address -->
+                    <div>
+                        <label for="{{ form.mac_address.id_for_label }}" class="block text-sm font-medium text-slate-400 mb-2">MAC Address</label>
+                        {{ form.mac_address }}
+                        {% for error in form.mac_address.errors %}<p class="text-red-400 text-xs mt-1">{{ error }}</p>{% endfor %}
+                    </div>
+                    <!-- Port -->
+                    <div>
+                        <label for="{{ form.port.id_for_label }}" class="block text-sm font-medium text-slate-400 mb-2">Port</label>
+                        {{ form.port }}
+                        {% for error in form.port.errors %}<p class="text-red-400 text-xs mt-1">{{ error }}</p>{% endfor %}
                     </div>
                     <!-- Location -->
                     <div>
-                        <label for="newDeviceLocation" class="block text-sm font-medium text-slate-400 mb-2">Location</label>
-                        <input type="text" id="newDeviceLocation" name="location" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 focus:ring-2 focus:ring-cyan-500" required>
+                        <label for="{{ form.location.id_for_label }}" class="block text-sm font-medium text-slate-400 mb-2">Location</label>
+                        {{ form.location }}
+                        {% for error in form.location.errors %}<p class="text-red-400 text-xs mt-1">{{ error }}</p>{% endfor %}
                     </div>
                     <!-- Status -->
+                    <div>
+                        <label for="{{ form.status.id_for_label }}" class="block text-sm font-medium text-slate-400 mb-2">Status</label>
+                        {{ form.status }}
+                        {% for error in form.status.errors %}<p class="text-red-400 text-xs mt-1">{{ error }}</p>{% endfor %}
+                    </div>
+                    <!-- Owner -->
                     <div class="md:col-span-2">
-                        <label for="newDeviceStatus" class="block text-sm font-medium text-slate-400 mb-2">Status</label>
-                        <select id="newDeviceStatus" name="status" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 focus:ring-2 focus:ring-cyan-500" required>
-                            <option value="">Select status...</option>
-                            <option value="online">Online</option>
-                            <option value="offline">Offline</option>
-                            <option value="maintenance">Maintenance</option>
-                            <option value="active">Active</option>
-                            <option value="inactive">Inactive</option>
-                            <option value="warning">Warning</option>
-                        </select>
+                        <label for="{{ form.owner.id_for_label }}" class="block text-sm font-medium text-slate-400 mb-2">Assign To</label>
+                        {{ form.owner }}
+                        {% for error in form.owner.errors %}<p class="text-red-400 text-xs mt-1">{{ error }}</p>{% endfor %}
                     </div>
                     <!-- Description -->
                     <div class="md:col-span-2">
-                        <label for="newDeviceDescription" class="block text-sm font-medium text-slate-400 mb-2">Description</label>
-                        <textarea id="newDeviceDescription" name="description" rows="3" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 focus:ring-2 focus:ring-cyan-500"></textarea>
+                        <label for="{{ form.description.id_for_label }}" class="block text-sm font-medium text-slate-400 mb-2">Description</label>
+                        {{ form.description }}
+                        {% for error in form.description.errors %}<p class="text-red-400 text-xs mt-1">{{ error }}</p>{% endfor %}
                     </div>
                 </div>
             </form>

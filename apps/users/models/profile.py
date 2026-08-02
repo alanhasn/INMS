@@ -85,7 +85,7 @@ class Profile(models.Model):
                 img = img.convert("RGB")
                 max_size = (300, 300)
                 if img.width > 300 or img.height > 300:
-                    img.thumbnail(max_size, Image.ANTIALIAS)
+                    img.thumbnail(max_size, Image.Resampling.LANCZOS)
                     img.save(self.profile_image.path, format="JPEG", quality=90)
             except Exception:
                 # If resizing fails, fail silently so profile still saves.

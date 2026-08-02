@@ -50,5 +50,28 @@
                 if (modal) modal.classList.add('hidden');
             });
         });
+
+        // Device Details Modal: populate from the clicked row's data-* attributes
+        document.querySelectorAll('[data-view-device]').forEach(button => {
+            button.addEventListener('click', () => {
+                const fields = {
+                    detailDeviceName: button.dataset.name,
+                    detailDeviceType: button.dataset.type,
+                    detailDeviceIp: button.dataset.ip,
+                    detailDeviceMac: button.dataset.mac,
+                    detailDevicePort: button.dataset.port,
+                    detailDeviceStatus: button.dataset.status,
+                    detailDeviceLocation: button.dataset.location,
+                    detailDeviceOwner: button.dataset.owner,
+                    detailDeviceDescription: button.dataset.description,
+                };
+                for (const [id, value] of Object.entries(fields)) {
+                    const el = document.getElementById(id);
+                    if (el) el.textContent = value || '—';
+                }
+                const modal = document.getElementById('deviceDetailsModal');
+                if (modal) modal.classList.remove('hidden');
+            });
+        });
     });
 </script>

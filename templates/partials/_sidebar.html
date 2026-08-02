@@ -19,6 +19,7 @@
                     <i class='bx bx-server text-xl'></i> <span>Devices</span>
                 </a>
             </li>
+            {% if user.role == 'ADMIN' or user.role == 'MANAGER' %}
             <li>
                 <a href="{% url 'events:events' %}" class="flex items-center gap-3 px-4 py-2.5 rounded-lg font-medium transition-colors {% if active_page == 'events' %}bg-cyan-500/10 text-cyan-300{% else %}text-slate-300 hover:bg-slate-800 hover:text-white{% endif %}">
                     <i class='bx bx-bell text-xl'></i> <span>Events</span>
@@ -29,6 +30,7 @@
                     <i class='bx bx-file text-xl'></i> <span>Reports</span>
                 </a>
             </li>
+            {% endif %}
         </ul>
     </nav>
 

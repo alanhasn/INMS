@@ -125,7 +125,12 @@ def resend_password_reset_email(request):
 @login_required(login_url="login")
 def ProfilePage(request):
     # get_or_create returns a tuple (object, created)
-    profile, created = Profile.objects.get_or_create(user=request.user) # Get the user profile
+    # defaults= avoids ValidationError from Profile.clean(), which requires
+    # at least one of first_name/last_name to be set.
+    profile, created = Profile.objects.get_or_create(
+        user=request.user,
+        defaults={"first_name": request.user.username},
+    ) # Get the user profile
 
     if created:
         messages.info(request, "Profile created successfully. Please edit your profile to add more information.")
@@ -145,7 +150,10 @@ def EditProfile(request):
     Creates a Profile on first access if none exists.
     """
     # Ensure a Profile exists for this user
-    profile, created = Profile.objects.get_or_create(user=request.user)
+    profile, created = Profile.objects.get_or_create(
+        user=request.user,
+        defaults={"first_name": request.user.username},
+    )
     if created:
         messages.info(
             request,
