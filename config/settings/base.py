@@ -22,7 +22,9 @@ sys.path.append(str(BASE_DIR / 'apps'))  # This allows us to import apps from th
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('DJANGO_SECRET_KEY',default='django-insecure-!@#%$^&*()_+1234567890-=qwertyuiopasdfghjklzxcvbnm')
+# No default here on purpose: a hardcoded fallback would be public the moment
+# this repo is public, and this key also signs JWTs (see SIMPLE_JWT below).
+SECRET_KEY = config('DJANGO_SECRET_KEY')
 
 # Application definition
 # Custom Apps
@@ -149,13 +151,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Password Hashing Algorithm 
+# Password Hashing Algorithm
+# (Django's own PBKDF2 iteration count, which increases every release, is used.
+# It was previously hardcoded down to 10000, far below Django's current
+# default of 1,000,000+, which made stolen password hashes much cheaper to
+# brute-force.)
 PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.PBKDF2PasswordHasher',
     'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
 ]
-
-PBKDF2_PASSWORD_ITERATIONS = 10000  # Number of iterations for PBKDF2 hashing algorithm
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
