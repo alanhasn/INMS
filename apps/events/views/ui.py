@@ -37,8 +37,6 @@ def test(request):
     # --- 3. Data for the 'Add Event' Modal ---
     all_devices = Device.objects.all()
 
-    all_events = Event.objects.all()
-
     context = {
         'active_page': 'events',
         'critical_count': critical_count,
@@ -47,6 +45,5 @@ def test(request):
         'info_count': info_count,
         'page_obj': page_obj,  # <-- PASS THE PAGE OBJECT, NOT THE FULL LIST
         'devices': all_devices,
-        'events': all_events,
     }
     return render(request, 'events/events.html', context)

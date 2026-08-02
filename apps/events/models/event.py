@@ -7,7 +7,11 @@ class Event(models.Model):
     event_type = models.CharField(max_length=100, verbose_name="Event Type")
     event_description = models.TextField(verbose_name="Event Description")
     event_date = models.DateTimeField(auto_now_add=True, verbose_name="Event Date")
-    device = models.ForeignKey(Device, on_delete=models.CASCADE, verbose_name="Device")
+    # Nullable: user-action events (login/logout) have no device, and a
+    # deleted device should not take its historical events down with it.
+    device = models.ForeignKey(
+        Device, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Device"
+    )
 
     class SavertyChoices(models.TextChoices):
         INFO = "Info"
@@ -23,4 +27,5 @@ class Event(models.Model):
         ordering = ['-event_date']
 
     def __str__(self):
-        return f"{self.event_type} - {self.device.device_name} - {self.event_date.strftime('%Y-%m-%d %H:%M:%S')}"
+        device_name = self.device.device_name if self.device else "N/A"
+        return f"{self.event_type} - {device_name} - {self.event_date.strftime('%Y-%m-%d %H:%M:%S')}"
