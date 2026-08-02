@@ -5,14 +5,19 @@ from django.shortcuts import render
 from apps.devices.models import Device
 from apps.events.models import Event
 
-from ...users.models import Profile
+from ...users.models import CustomUser, Profile
+from ...users.permissions.user_permissions import role_required
 from ..forms import DeviceForm
 
 
+@role_required(CustomUser.Roles.ADMIN, CustomUser.Roles.Manager, CustomUser.Roles.Employee)
 def test(request):
-    # Get the full list of devices. We can add optimizations like prefetching related data later.
-    device_list = Device.objects.all()
-    
+    # Admins/Managers oversee every device; Employees only see devices assigned to them.
+    if request.user.role == CustomUser.Roles.Employee:
+        device_list = Device.objects.filter(owner=request.user)
+    else:
+        device_list = Device.objects.all()
+
     # Create a Paginator instance with 15 devices per page (you can adjust this number)
     paginator = Paginator(device_list, 15) 
     

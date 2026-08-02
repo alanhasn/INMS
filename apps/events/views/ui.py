@@ -7,7 +7,11 @@ from django.utils import timezone
 from apps.devices.models import Device
 from apps.events.models import Event
 
+from apps.users.models import CustomUser
+from apps.users.permissions.user_permissions import role_required
 
+
+@role_required(CustomUser.Roles.ADMIN, CustomUser.Roles.Manager)
 def test(request):
     # --- 1. Data for Summary Cards (last 24 hours) ---
     twenty_four_hours_ago = timezone.now() - timedelta(days=1)

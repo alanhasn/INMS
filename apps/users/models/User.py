@@ -10,7 +10,7 @@ class CustomUser(AbstractUser):
         Manager = 'MANAGER', 'Manager'
         Employee = 'EMPLOYEE', 'Employee'
 
-    role = models.DateField(null=True, blank=True,choices=Roles.choices)
+    role = models.CharField(max_length=20, choices=Roles.choices, default=Roles.Employee)
 
     def __str__(self):
         return self.username
