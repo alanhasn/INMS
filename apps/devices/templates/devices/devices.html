@@ -94,8 +94,14 @@
                         <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-red-500/10 text-red-400"><i class='bx bxs-circle'></i> Offline</span>
                         {% elif device.status|lower == 'maintenance' %}
                         <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-500/10 text-blue-400"><i class='bx bxs-circle'></i> Maintenance</span>
-                        {% else %}
+                        {% elif device.status|lower == 'active' %}
+                        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400"><i class='bx bxs-circle'></i> Active</span>
+                        {% elif device.status|lower == 'inactive' %}
+                        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-500/10 text-slate-400"><i class='bx bxs-circle'></i> Inactive</span>
+                        {% elif device.status|lower == 'warning' %}
                         <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-400"><i class='bx bxs-circle'></i> Warning</span>
+                        {% else %}
+                        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-500/10 text-slate-400"><i class='bx bxs-circle'></i> {{ device.status }}</span>
                         {% endif %}
                     </td>
                     <td class="px-6 py-4 text-slate-400">{{ device.owner }}</td>
