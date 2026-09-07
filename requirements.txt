@@ -14,7 +14,7 @@ oauthlib==3.2.2
 pillow==11.1.0
 ping3==5.1.5
 psycopg2==2.9.10
-pyasn1==0.6.1
+pyasn1==0.6.4
 pycparser==2.22
 PyJWT==2.9.0
 PyPDF2==3.0.1
