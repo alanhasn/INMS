@@ -21,7 +21,7 @@ PyPDF2==3.0.1
 pysnmp==7.1.21
 python-decouple==3.8
 python3-openid==3.2.0
-requests==2.32.4
+requests==2.33.0
 requests-oauthlib==2.0.0
 reportlab==4.3.1
 social-auth-app-django==5.6.0
