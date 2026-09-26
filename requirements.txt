@@ -25,7 +25,7 @@ requests==2.33.0
 requests-oauthlib==2.0.0
 reportlab==4.3.1
 social-auth-app-django==5.6.0
-social-auth-core==4.5.6
+social-auth-core==5.0.0
 sqlparse==0.6.0
 tzdata==2025.2
 urllib3==2.7.0
