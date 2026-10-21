@@ -28,4 +28,4 @@ social-auth-app-django==5.6.0
 social-auth-core==5.0.0
 sqlparse==0.6.0
 tzdata==2025.2
-urllib3==2.7.0
+urllib3==2.8.0
